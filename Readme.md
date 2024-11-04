@@ -1,9 +1,9 @@
-#Getting Started Walk-through for IT Pros and System Administrators
+<h1>Getting Started Walk-through for IT Pros and System Administrators</h1>
 
 
-#Basics
+<h2>Basics</h2>
 
-#1.0 Running your first container
+<h3>1.0 Running your first container</h3>
 Выполнемая команда:
 docker container run hello-world
 Результат в консоли:
@@ -13,7 +13,7 @@ docker container run hello-world
 при запуске движок докера попытался осуществить поиск требуемого образа локально. После того,как движок не нашел образ докера локально, произошел поиск в Докер-регистре по умолчанию, которм вляется Докер хаб.
 
 
-#1.1 Docker images
+<h3>1.1 Docker images</h3>
 
 
 В данной работе производится загрузка докер-образа linux alpine с Docker Hub. выполняемые команды:
