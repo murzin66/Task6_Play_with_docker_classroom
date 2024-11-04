@@ -26,7 +26,11 @@ docker image ls
 
 
 Реультат выполнения команд в консоли:
+
+
 ![Screenshot 2024-11-04 at 22 17 01](https://github.com/user-attachments/assets/ffbf4d3c-6cae-4603-a503-ae2217669de1)
+
+
 <p>Так, образ linux alpine был успешно загружен  с Docker Hub</p>
 <p><h3>1.1 Docker container run</h3></p>
 <p>В данномм задании изучается запуск контейнера</p>
