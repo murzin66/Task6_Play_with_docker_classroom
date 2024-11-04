@@ -7,6 +7,8 @@
 Выполнемая команда:
 docker container run hello-world
 Результат в консоли:
+
+
 ![Screenshot 2024-11-04 at 22 06 42](https://github.com/user-attachments/assets/75866b01-30e3-4973-a007-9b42ba5c3000)
 
 
