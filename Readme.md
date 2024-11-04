@@ -73,4 +73,29 @@ docker container run alpine /bin/sh
 
 <h3>1.2 Container isolation</h3>
 
+<p>Разберемся подробнее с концепциией изоляции контейнеров. Для этого выполним следующие команды:</p>
+docker container run -it alpine /bin/ash
+
+<p>Внутри контейнра выполним следующие команды:</p>
+echo "hello world" > hello.txt
+ ls
+<p>Убедимся в том, что файл hello.txt был создан:</p>
+
+![Screenshot 2024-11-04 at 23 52 01](https://github.com/user-attachments/assets/192e18ad-f804-4654-856d-b43b9e7397ed)
+
+
+<p>Выполниим снова команду docker container run alpine ls, как результат, файл hello.txt не найден, поскольку данная команда была запущена  в отдельном контейнере, который не связан с предыдущим, это и есть демманстация концепции изоляции:</p>
+
+![Screenshot 2024-11-04 at 23 56 30](https://github.com/user-attachments/assets/5c2e4790-d830-4766-a5a5-9ecc8f78cb46)
+
+
+<p>Для того, чтобы получить доступ к контейнеру, в котором был создан файл hello.txt необходимо узнать ID контейнера, для этого выведем список  всех контейнеров, найдем среди списка нужный контейнер, командой docker container ls -a, затем запустим останоленный контейнер и выведем список созданных файлов при помощи команд:</p>
+
+docker container start <container ID>
+docker container exec <container ID> ls
+
+Как результат увидим искомый файл среди спииска файлов:
+ 
+![Screenshot 2024-11-05 at 00 04 47](https://github.com/user-attachments/assets/08a3f0f7-11b9-4c58-9265-33b899eda51d)
+
 
