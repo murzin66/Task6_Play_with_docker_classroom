@@ -141,5 +141,13 @@ docker container run -it --network=host ubuntu bash
 
 ![Screenshot 2024-11-05 at 23 26 09](https://github.com/user-attachments/assets/6adf9c0e-b75d-4ed0-a535-1957cdf78229)
 
+<h3>Image creation using a Dockerfile</h3>
+<p>В данном подразделе рассмтаривается создание докер контейнера с помощью Dockerfile. Создадим файл index.js, содержащий вывод в консоль имя пользователя, а также Dockerfile, содержащий требуемую последовательность действий для запуска контейнера, в том числе базовый образ linux alpine, установку обновлений, копирование файлов локальной папки в папку внутри образа, а также команду, которую необходимо выполнить при запуске контейнера (CMD). Используемые файлы представлены в директории IT_pros_system_admins/The_basics/Customising_docker_images . Для сборки контейнера необходимо выполнить команду: </p>
+<p>docker image build --network=host -t hello:v0.1 .</p>
+<p>После того, как контейнер собран, его необходимо запустить командой: docker container run hello:v0.1</p>
+
+В результате выполнения даных действий получим:
+
+![Screenshot 2024-11-06 at 00 03 11](https://github.com/user-attachments/assets/c7ade275-74bd-43bf-8fd5-e0f04b532141)
 
 
