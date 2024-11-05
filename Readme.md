@@ -109,9 +109,9 @@ docker container run -it --network=host ubuntu bash
 
 <p>Образ ubuntu загружен и запущен контейнер на его основе.</p>
 <p>Кастомизируем наш контейнер, для этого выполним команды:</p>
-*apt-get update
-*apt-get install -y figlet
-*figlet "hello docker"
+* apt-get update
+* apt-get install -y figlet
+* figlet "hello docker"
 <p>Как результат видим Hello docker большими символами Ascii в консоли:</p>
 
 ![Screenshot 2024-11-05 at 23 06 17](https://github.com/user-attachments/assets/b2d05fb1-ffe6-4839-bf09-9a31b7b31220)
@@ -130,10 +130,10 @@ docker container run -it --network=host ubuntu bash
 
 <p>Зафиксируем изменения контейнера в коммите, получаем новый образ, переименуем его для удобства, проверим работоспособность образа. Для выполнения даных действий понадобилось выполнить следующие команды:</p>
 
-*docker container commit Container_ID
-*docker image ls
-*docker image tag Image_ID Image_name
-*docker container run ourfiglet figlet hello
++ docker container commit Container_ID
++ docker image ls
++ docker image tag Image_ID Image_name
++ docker container run ourfiglet figlet hello
 
 <p>Как резальтат видим успешный запуск образа</p>
 
