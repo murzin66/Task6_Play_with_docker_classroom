@@ -101,9 +101,43 @@ docker container exec <container ID> ls
 <h2>Customizing Docker images</h2>
 <h3>Image creation from a container</h3>
 В данном подразделе будет создан простой образ из контейнера. Для того, чтобы создать контейнер, загрузим образ ubuntu из Docker hub и запустим командой run:
+docker container run -it --network=host ubuntu bash
 
-![Screenshot 2024-11-05 at 09 49 40](https://github.com/user-attachments/assets/e156cce8-97bf-4ecb-ac20-e1f95401dc49)
 
-Образ ubuntu загружен и запущен контейнер на его основе.
+![Screenshot 2024-11-05 at 23 05 45](https://github.com/user-attachments/assets/5149c983-7097-403d-a06d-a049ca0abc90)
+
+
+<p>Образ ubuntu загружен и запущен контейнер на его основе.</p>
+<p>Кастомизируем наш контейнер, для этого выполним команды:</p>
+-apt-get update
+-apt-get install -y figlet
+-figlet "hello docker"
+<p>Как результат видим Hello docker большими символами Ascii в консоли:</p>
+
+![Screenshot 2024-11-05 at 23 06 17](https://github.com/user-attachments/assets/b2d05fb1-ffe6-4839-bf09-9a31b7b31220)
+
+<p>выйдем из контейнера командой exit:</p>
+
+![Screenshot 2024-11-05 at 23 10 18](https://github.com/user-attachments/assets/6d99f961-3423-4fb3-84aa-01c6ea12af5b)
+
+<p>Для того, чтобы зафиксировать изменения в котейнере необходимо знать его ID, выведем список всех контейнеров командой docker container ls -a. Как результат видим созданный ранее контейнер: </p>
+
+![Screenshot 2024-11-05 at 23 24 38](https://github.com/user-attachments/assets/aeb502d6-c2ff-4812-8f40-a86f81d5662d)
+
+<p>Существует также возможность просмотра внесенных в контейнер изменений командой docker container diff <container id></p>
+ 
+![Screenshot 2024-11-05 at 23 25 35](https://github.com/user-attachments/assets/7bbc44ed-7533-46de-8967-8bdf18fdb1ce)
+
+<p>Зафиксируем изменения контейнера в коммите, получаем новый образ, переименуем его для удобства, проверим работоспособность образа. Для выполнения даных действий понадобилось выполнить следующие команды:</p>
+
+-docker container commit Container_ID
+-docker image ls
+-docker image tag Image_ID Image_name
+-docker container run ourfiglet figlet hello
+
+<p>Как резальтат видим успешный запуск образа</p>
+
+![Screenshot 2024-11-05 at 23 26 09](https://github.com/user-attachments/assets/6adf9c0e-b75d-4ed0-a535-1957cdf78229)
+
 
 
