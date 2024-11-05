@@ -179,3 +179,47 @@ docker container run -it --network=host ubuntu bash
 ![Screenshot 2024-11-06 at 00 37 10](https://github.com/user-attachments/assets/d2cfdc3c-8584-484d-acfc-078ddb17f1e3)
 
 <p>Для образа hello наблюдаем уже три слоя: один из слоев это образ alpine (можно наблюдать как sha256 совпадают с образом alpine), далее есть слой Run для установки необходимых пакетов, а также слой содержащий копирование файла index.js с локальной машины в контейнер. Также стоит отметить, что все слои кроме последнего являются неизменяемыми</p>
+<h3>Swarm Mode Introduction for IT Pros</h3>
+<h3>Initialize your swarm</h3>
+<p>Swarm режим сообщает докеру о том, что необходимо запустить несколько Docker движков и мы хотим иметь возможность управлять ими всеми. Для того, чтобы инициировать swarm режим воспользуемся командой <b>docker swarm init --advertise-addr $(hostname -i)</b>. В результате выполнения программы получим:</p>
+
+![Screenshot 2024-11-06 at 00 57 20](https://github.com/user-attachments/assets/c9c92196-2d2e-4b35-a4b5-7a50f52ae6fe)
+
+<p>В данном сообщении содержится информация о том как добавить новый узел - обработчик, а также о том, как добавить узел менеджер, добавим еще один узел обработчик командой <b>docker swarm join -token SWMTKN</b>:</p>
+
+![Screenshot 2024-11-06 at 00 58 19](https://github.com/user-attachments/assets/a855eb1b-d14c-48cc-aeec-664c0ee24175)
+
+<p>Убедимся в том, что второй узел успешно добавлен, для этого выполним команду <b>docker node ls</b>. В списке узлов видим два узла, один из которых является управляющим (Leader)</p>
+
+![Screenshot 2024-11-06 at 01 00 20](https://github.com/user-attachments/assets/cbd35436-2c5e-4c5d-b5a8-011ee9df217b)
+
+<p>Изучим пример кода с приложением голосования, для этого выполним команды:</p>
+
++ git clone https://github.com/docker/example-voting-app
++ cd example-voting-app
+
+![Screenshot 2024-11-06 at 01 05 25](https://github.com/user-attachments/assets/dcfa0ef7-0aea-407a-8461-3b58bd158b47)
+
+<p>После клонирования обртим внимание на файл docker-stack.yml, который содержит информацию о архитектуре сервисов, количестве экземпляров, как все соединено, как обрабатывать обновления для каждого сервиса</p>
+
+![Screenshot 2024-11-06 at 01 09 26](https://github.com/user-attachments/assets/e7da1890-a294-44e0-b904-e0648c4a42ae)
+
+<p>Развернем стек (группу сервисов) командой <b>docker stack deploy --compose-file=docker-stack.yml voting_stack</b> , определим количество развернутых сервисов командой <b>docker stack ls</b></p>
+
+![Screenshot 2024-11-06 at 01 10 17](https://github.com/user-attachments/assets/bd41ce58-800b-40cc-b100-61d8a5de3008)
+
+<p>Также можно получить более детальную информацию о каждом сервисе c помощью команды <b>docker stack services voting_stack</b>:</p>
+
+![Screenshot 2024-11-06 at 01 14 02](https://github.com/user-attachments/assets/1e5b886b-5178-4249-b36a-ffae9f6207df)
+
+<p>Список задач сервиса голосования можно получить командой <b>docker service ps voting_stack_vote</b>:</p>
+
+![Screenshot 2024-11-06 at 01 15 06](https://github.com/user-attachments/assets/2f6976d2-bc56-41cc-acd0-a020116c5df8)
+
+
+<p>Для масштабирования приложения выполним команду <b>docker service scale voting_stack_vote=5</b>. Убедимся в том, что число сервисов возросло до 5 с помощью команды <b>docker stack services voting_stack</b></p>
+
+![Screenshot 2024-11-06 at 01 20 29](https://github.com/user-attachments/assets/c95754b4-6ea7-4a78-9fec-87c186d185ab)
+
+
+
