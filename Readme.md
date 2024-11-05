@@ -98,4 +98,12 @@ docker container exec <container ID> ls
  
 ![Screenshot 2024-11-05 at 00 04 47](https://github.com/user-attachments/assets/08a3f0f7-11b9-4c58-9265-33b899eda51d)
 
+<h2>Customizing Docker images</h2>
+<h3>Image creation from a container</h3>
+В данном подразделе будет создан простой образ из контейнера. Для того, чтобы создать контейнер, загрузим образ ubuntu из Docker hub и запустим командой run:
+
+![Screenshot 2024-11-05 at 09 49 40](https://github.com/user-attachments/assets/e156cce8-97bf-4ecb-ac20-e1f95401dc49)
+
+Образ ubuntu загружен и запущен контейнер на его основе.
+
 
