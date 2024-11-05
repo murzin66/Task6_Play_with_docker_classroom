@@ -189,16 +189,21 @@ docker container run -it --network=host ubuntu bash
 
 ![Screenshot 2024-11-06 at 00 58 19](https://github.com/user-attachments/assets/a855eb1b-d14c-48cc-aeec-664c0ee24175)
 
+<h3>Show Swarm Members</h3>
+
 <p>Убедимся в том, что второй узел успешно добавлен, для этого выполним команду <b>docker node ls</b>. В списке узлов видим два узла, один из которых является управляющим (Leader)</p>
 
 ![Screenshot 2024-11-06 at 01 00 20](https://github.com/user-attachments/assets/cbd35436-2c5e-4c5d-b5a8-011ee9df217b)
 
+<h3>Clone the Voting App</h3>
 <p>Изучим пример кода с приложением голосования, для этого выполним команды:</p>
 
 + git clone https://github.com/docker/example-voting-app
 + cd example-voting-app
 
 ![Screenshot 2024-11-06 at 01 05 25](https://github.com/user-attachments/assets/dcfa0ef7-0aea-407a-8461-3b58bd158b47)
+
+<h3>Deploy a Stack</h3>
 
 <p>После клонирования обртим внимание на файл docker-stack.yml, который содержит информацию о архитектуре сервисов, количестве экземпляров, как все соединено, как обрабатывать обновления для каждого сервиса</p>
 
@@ -216,6 +221,7 @@ docker container run -it --network=host ubuntu bash
 
 ![Screenshot 2024-11-06 at 01 15 06](https://github.com/user-attachments/assets/2f6976d2-bc56-41cc-acd0-a020116c5df8)
 
+<h3>Scaling An Application</h3>
 
 <p>Для масштабирования приложения выполним команду <b>docker service scale voting_stack_vote=5</b>. Убедимся в том, что число сервисов возросло до 5 с помощью команды <b>docker stack services voting_stack</b></p>
 
