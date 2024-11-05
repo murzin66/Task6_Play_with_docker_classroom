@@ -210,7 +210,7 @@ docker container run -it --network=host ubuntu bash
 
 <p>Также можно получить более детальную информацию о каждом сервисе c помощью команды <b>docker stack services voting_stack</b>:</p>
 
-![Screenshot 2024-11-06 at 01 14 02](https://github.com/user-attachments/assets/1e5b886b-5178-4249-b36a-ffae9f6207df)
+![Screenshot 2024-11-06 at 01 24 23](https://github.com/user-attachments/assets/88f32f20-5984-4c06-9a90-4352522107bd)
 
 <p>Список задач сервиса голосования можно получить командой <b>docker service ps voting_stack_vote</b>:</p>
 
