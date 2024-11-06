@@ -1,3 +1,6 @@
+Автор: Мурзин Михаил группа 4207
+Данный репозторий предназначен для отчета по выполнению тренировочных заданий https://training.play-with-docker.com/
+
 <h1>Getting Started Walk-through for IT Pros and System Administrators</h1>
 
 
@@ -399,6 +402,21 @@ cat ./seccomp-profiles/default-no-chmod.json | grep chmod
 
 ![Screenshot 2024-11-06 at 23 21 31](https://github.com/user-attachments/assets/3e4c7424-3067-4d86-968e-3bfa26753ced)
 
-Среди установленных плагинов сети видим bridge, host,macvlan, null, and overlay драйверы.
+Среди установленных плагинов сети видим bridge, host,macvlan, null, и overlay драйверы.
+
+<h3> Section #2 - Bridge Networking </h3>
+
+При запуске Docker всегда существует предустановленная сеть bridge, в предыдущем подразделе убедились в существовании данной сети (<b>docker netork ls</b>). Добавим команду brctl для получения списка мостов Linux на хосте Docker.
+
+<b>apk update
+
+apk add bridge</b>
+
+Получим список мостов с помощью команды:
+
+<b>brctl show</b>
+
+![Screenshot 2024-11-06 at 23 33 41](https://github.com/user-attachments/assets/40dba0f2-9fe3-41ad-b9f6-0d721a2be9ca)
+
 
 
