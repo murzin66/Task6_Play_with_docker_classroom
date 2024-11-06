@@ -418,5 +418,164 @@ apk add bridge</b>
 
 ![Screenshot 2024-11-06 at 23 33 41](https://github.com/user-attachments/assets/40dba0f2-9fe3-41ad-b9f6-0d721a2be9ca)
 
+Для получения дополнительной информации о мостах необходимо выполнить команду:
+
+<b>ip a</b>
+
+![Screenshot 2024-11-06 at 23 53 18](https://github.com/user-attachments/assets/5580a0b4-347b-47f3-91b9-e44fba3704e0)
+
+Создадим контейнер командой:
+
+<b>docker run -dt ubuntu sleep infinity</b>
+
+Убедимся в том, что контейнер запустился:
+<b>docker ps</b>
+
+Поскольку никакая сеть не была задана при запуске контейнера, то используется сеть bridge, запустим команду <b>brctl show</b>:
+
+![Screenshot 2024-11-07 at 00 15 09](https://github.com/user-attachments/assets/f9de4ead-ce4c-406e-bb09-b0c83744e6af)
+
+Также можем получить информацию о сети bridge:
+
+<b>docker network inspect bridge</b>
+
+![Screenshot 2024-11-07 at 00 19 34](https://github.com/user-attachments/assets/3cc26bca-c5b5-4de0-94b0-0d6e5a9fe3cc)
+
+![Screenshot 2024-11-07 at 00 19 46](https://github.com/user-attachments/assets/0b379e85-7584-4b99-bff5-377230cdc3b8)
+
+Успешно находим инфомрацию о контейнере, который подключен к сети bridge. Попробуем пропинговать IP адрес сети моста, к которой подключен контейнер.
+
+<b> ping -c5 <IPv4 Address> </b>
+
+![Screenshot 2024-11-07 at 00 22 19](https://github.com/user-attachments/assets/0db6f9f4-11cb-42fc-a841-f4f4f8d7c653)
+
+Запустим shell контейнера командой <b> docker exec -it <CONTAINER ID> /bin/bash. </b>. Далее в пособии имеется ошибка и следующая команда не может быть выполнена, поскольку контейнер не подключен к внешней сети интернет, попытка обновления apt-get проваливается:
+
+apt-get update && apt-get install -y iputils-ping
+![Screenshot 2024-11-07 at 00 24 56](https://github.com/user-attachments/assets/b5715b54-0645-4afb-aab0-b210edd19672)
+
+Остановим контейнер и передем к следующему шагу.
+
+Запустим новый контейнер на основе образа nginx и соединим порт 8080 Docker host c портом 80 контейнера с помощью запуска команды:
+
+<b> docker run --name web1 -d -p 8080:80 nginx</b>
+
+![Screenshot 2024-11-07 at 00 34 58](https://github.com/user-attachments/assets/c69eef6d-8f0d-49a3-93e1-06c2d37ee13c)
+
+Проверим статус контейнера и соответсвие портов командой <b>docker ps</b>:
+
+![Screenshot 2024-11-07 at 00 35 18](https://github.com/user-attachments/assets/5143271c-9bc5-4833-b29f-eeddef043e6d)
+
+Если нет возможности подключиться к браузеру, отправить запрос можно к docker host командой :
+
+<b>curl 127.0.0.1:8080</b>
+
+![Screenshot 2024-11-07 at 00 37 53](https://github.com/user-attachments/assets/e5166dfb-d2ea-498c-b680-27d97be835ff)
+
+В ответ на запрос приходит тестовая страница образа nginx
+
+![Screenshot 2024-11-07 at 00 44 29](https://github.com/user-attachments/assets/ebebd41e-04d0-4830-86ec-bd551721a546)
+
+<h3>Section 3 - Overlay Networking</h3>
+
+Запустим Swarm с одним узлом worker, проверим выполнение операций. Выполним команду <b>docker swarm init --advertise-addr $(hostname -i)</b>
+
+![Screenshot 2024-11-07 at 00 51 54](https://github.com/user-attachments/assets/e5c056a4-5ad4-4582-9b11-7f491b6c1558)
+
+Во втором узле выполним команду, добавим узел в swarm в качестве worker <b>docker swarm join --token SWMTKN-1-69nft06mpui4ygps7qzwu6lwvbbtuz478lp463kwcrre4m3awl-aykrmn6m9pgn5lo8f68gg7y89 192.168.0.27:2377</b>
+
+![Screenshot 2024-11-07 at 00 52 58](https://github.com/user-attachments/assets/08032dc8-7194-4bc4-93b7-ba5297123451)
+
+После выполнения команды убедимся, что оба узла добавлены в swarm: 
+
+<b>docker node ls </b>
+
+![Screenshot 2024-11-07 at 00 54 22](https://github.com/user-attachments/assets/34bf484e-0564-4f3e-84a8-3a63ec6055fb)
+
+Создадим перекрывающуюся сеть командой :
+
+<b>docker network create -d overlay overnet</b>
+
+![Screenshot 2024-11-07 at 01 00 53](https://github.com/user-attachments/assets/55a70d75-0c7a-4b7c-9e3c-35f867fe8425)
+
+Убедимся в том, что сеть была успешно создана с помощью команды <b><docker network ls/b> в узле менеджера
+
+![Screenshot 2024-11-07 at 01 04 17](https://github.com/user-attachments/assets/5abfcef3-dca0-4675-a79f-cb898c4fc9ca)
+
+Вместе с этим в узле worker сеть не отображается, это связано с overlay драйвером
+
+![Screenshot 2024-11-07 at 01 04 43](https://github.com/user-attachments/assets/da682b11-3630-4b8c-9ee3-6b52b86aab89)
+
+Для получения дополнительной информации о сети overnet можно воспользоваться командой:
+
+<b>docker network inspect overnet</b>
+
+![Screenshot 2024-11-07 at 01 06 00](https://github.com/user-attachments/assets/addf8418-c1cf-48fb-83b1-0f6e135671cf)
+
+Выполним данные команды для создания сервиса с двумя репликами:
+
+<b>
++ docker service create --name myservice \
+
++  --network overnet \
+
++ --replicas 2 \
+
++ ubuntu sleep infinity
+</b>
+
+![Screenshot 2024-11-07 at 01 08 34](https://github.com/user-attachments/assets/6e0a98fa-7221-4fdb-ae2d-4b5645ccf373)
+
+Убедимся в том, что сервис был создан и обе реплики работают с помощью команды <b>docker service ls</b>
+
+![Screenshot 2024-11-07 at 01 09 59](https://github.com/user-attachments/assets/17c8dc84-35e7-42a8-910b-a9c913fadbff)
+
+Убедимся в том, что на каждом узле запущено одо задание с помощью команды: 
+
+<b>docker service ps myservice</b>
+
+![Screenshot 2024-11-07 at 01 10 35](https://github.com/user-attachments/assets/682c3831-44bb-4fdc-961d-b9ae2c08ff38)
+
+Теперь во втором узле можем получить информацию о сети overlay с помощью команд:
+
+<b>docker network inspect overnet</b>
+
+<b>docker network ls</b>
+
+![Screenshot 2024-11-07 at 01 12 36](https://github.com/user-attachments/assets/084d4b00-9843-4fbe-9fdb-1437540c4170)
+
+
+![Screenshot 2024-11-07 at 01 12 48](https://github.com/user-attachments/assets/ec7b523b-d775-42bc-b1e4-15c99369cbf2)
+
+Выполнение команды <b>apt-get update && apt-get install -y iputils-ping</b> не предоставляется возможным, поскольку при создании контейнера необходимо было подключить --network=host для доступа во внешгюю сеть интернет
+
+Запустим bash внутри контейнера, просмотрим содержимое файла resolve.cof:
+
+<b>
+docker exec -it yourcontainerid /bin/bash
+cat /etc/resolv.conf
+</b>
+
+![Screenshot 2024-11-07 at 01 21 14](https://github.com/user-attachments/assets/4201e12f-da5e-40b2-ab71-66e2ca828a1d)
+
+Интересующее нас значение - это сервер имен 127.0.0.11. Это значение отправляет все DNS-запросы от контейнера к встроенному DNS-резольверу, работающему внутри контейнера и слушающему 127.0.0.11:53. Все контейнеры Docker запускают встроенный DNS-сервер по этому адресу.
+
+Очистим созданные сервисы командой <b>docker service rm myservice</b>
+
+![Screenshot 2024-11-07 at 01 23 33](https://github.com/user-attachments/assets/7485a2ca-89fe-4e42-a5f3-b578c38dde06)
+
+Просмотрим работающие контейнеры <b> docker ps</b>:
+
+![Screenshot 2024-11-07 at 01 25 21](https://github.com/user-attachments/assets/379e57dc-c40f-4813-a25a-61e2324004e8)
+
+Удалим узлы 1 и 2 из Swarm командой <b>docker swarm leave --force</b>
+
+![Screenshot 2024-11-07 at 01 26 20](https://github.com/user-attachments/assets/d7338da8-ca13-4e99-981d-2196c8a490a8)
+
+![Screenshot 2024-11-07 at 01 27 37](https://github.com/user-attachments/assets/7298b642-abb4-4b66-bdaf-2dead4318a42)
+
+После удаления узлов работающий контейнер был остановлен 
+
+![Screenshot 2024-11-07 at 01 29 49](https://github.com/user-attachments/assets/e60a6275-edd2-42a6-809d-d3f8a6d9bcb1)
 
 
