@@ -269,3 +269,37 @@ strace -c -f -S name whoami 2>&1 1>/dev/null | tail -n +3 | head -n -2 | awk '{p
 ![Screenshot 2024-11-06 at 21 47 45](https://github.com/user-attachments/assets/3341c7a0-3f8c-499f-a10d-50a27a5e377b)
 
 <h3>Step 4: Selectively remove syscalls</h3>
+<p>Запустим новый контейнер с профайлом default-no-chmod.json и попробуем запутить команду chmod 777 / -v :</p>
+<b><p>docker run --rm -it --security-opt seccomp=./seccomp-profiles/default-no-chmod.json alpine sh</p>
+<p>chmod 777 / -v</p>
+</b>
+
+![Screenshot 2024-11-06 at 21 53 14](https://github.com/user-attachments/assets/30416282-a4ef-45c9-8b99-f0e9c54a3415)
+
+Данную операцию не удалось выполнить, поскольку системный вызов chmod был удален из белого списка в default-no-chmod.json
+
+Запустим другой контейнер, в котором воспользуемся профилем, default.json содержащем команду chmod в белом списке:
+
+<b>
+docker run --rm -it --security-opt seccomp=./seccomp-profiles/default.json alpine sh
+
+chmod 777 / -v</b>
+
+![Screenshot 2024-11-06 at 21 55 59](https://github.com/user-attachments/assets/c574f2d2-cc27-40d3-b757-89144b6bdc5d)
+
+В данном случае удалось успешно выполнить операцию. Убедимся в том, что файл default.json содержит chmod , а файл default-no-chmod.json не содержит chmod:
+
+<b>
+cat ./seccomp-profiles/default.json | grep chmod
+
+cat ./seccomp-profiles/default-no-chmod.json | grep chmod
+</b>
+
+![Screenshot 2024-11-06 at 21 58 03](https://github.com/user-attachments/assets/25624f94-a237-4cda-9a16-25af8cdd3d7b)
+
+<h3>Step 5: Write a seccomp profile</h3>
+С помощью strace можно получить список всех системных вызовов, выполняемых программой. Это очень хорошая отправная точка для написания политик seccomp. Вот пример того, как мы можем получить список всех системных вызовов, выполняемых программой ls:
+
+![Screenshot 2024-11-06 at 21 59 45](https://github.com/user-attachments/assets/07370a24-3f20-4820-82a6-f719643d15d4)
+
+
