@@ -452,6 +452,7 @@ apk add bridge</b>
 Запустим shell контейнера командой <b> docker exec -it <CONTAINER ID> /bin/bash. </b>. Далее в пособии имеется ошибка и следующая команда не может быть выполнена, поскольку контейнер не подключен к внешней сети интернет, попытка обновления apt-get проваливается:
 
 apt-get update && apt-get install -y iputils-ping
+
 ![Screenshot 2024-11-07 at 00 24 56](https://github.com/user-attachments/assets/b5715b54-0645-4afb-aab0-b210edd19672)
 
 Остановим контейнер и передем к следующему шагу.
