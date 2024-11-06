@@ -298,7 +298,10 @@ cat ./seccomp-profiles/default-no-chmod.json | grep chmod
 ![Screenshot 2024-11-06 at 21 58 03](https://github.com/user-attachments/assets/25624f94-a237-4cda-9a16-25af8cdd3d7b)
 
 <h3>Step 5: Write a seccomp profile</h3>
-С помощью strace можно получить список всех системных вызовов, выполняемых программой. Это очень хорошая отправная точка для написания политик seccomp. Вот пример того, как мы можем получить список всех системных вызовов, выполняемых программой ls:
+С помощью strace можно получить список всех системных вызовов, выполняемых программой, убедимся в этом:
+
+<b>strace -c -f -S name ls 2>&1 1>/dev/null | tail -n +3 | head -n -2 | awk '{print $(NF)}'</b>
+
 
 ![Screenshot 2024-11-06 at 21 59 45](https://github.com/user-attachments/assets/07370a24-3f20-4820-82a6-f719643d15d4)
 
