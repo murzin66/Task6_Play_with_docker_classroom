@@ -227,5 +227,45 @@ docker container run -it --network=host ubuntu bash
 
 ![Screenshot 2024-11-06 at 01 20 29](https://github.com/user-attachments/assets/c95754b4-6ea7-4a78-9fec-87c186d185ab)
 
+<h2>Stage 2: Digging deeper</h2>
+<h3>Security Lab: Seccomp</h3>
+<h3>Step 1: Clone the labs GitHub repo</h3>
+<p>В данной работе рассмотрен  seccomp, который предоставляет  песочницу в ядре линукса, который действует как брандмауэр для системых вызовов. 
+Он использует правила Berkeley Packet Filter (BPF), которые могут значительно ограничить доступ контейнеров к ядру Linux хоста Docker. Клонируем репозиторий, содержащий профиль seccomp для выполнения работы, изменим рабочую директорию </p>
+ <b><p>git clone https://github.com/docker/labs</p>
+ <p>cd labs/security/seccomp</p>
+ </b>
+ 
+![Screenshot 2024-11-06 at 21 26 17](https://github.com/user-attachments/assets/d47254be-db71-442f-9e49-e12598bdec43)
 
+<h3> Step 2: Test a seccomp profile </h3>
 
+<p>Загрженный с github файл deny.json профиля seccomp содержит пустой белый лист, это означает, что все системные вызовы будут блокированы, убедимся в этом.  Запустим новый контейнер, уберем ограничения, накладываемые apparmor, применим профиль deny.json, убедимся в том, что системые вызовы отсутствют в белом списке</p>
+
+<b><p>docker run --rm -it --cap-add ALL --security-opt apparmor=unconfined --security-opt seccomp=seccomp-profiles/deny.json alpine sh</p></b>
+<b><p>cat seccomp-profiles/deny.json</p></b>
+
+![Screenshot 2024-11-06 at 21 35 29](https://github.com/user-attachments/assets/835f304a-a0cc-4d6e-91b2-a534ed518d91)
+
+<p>В данном случае у Docker недостаточно разрешения на системные вызовы и контейнер не был запущен. </p>
+ <h3>Step 3: Run a container with no seccomp profile</h3>
+ <p>Запустим контейнер без применения seccomp, убедимся в том, что контейнер работает и отправляет системные вызовы docker host:</p>
+<b>
+ <p>docker run --rm -it --security-opt seccomp=unconfined debian:jessie sh</p>
+ <p>whoami</p>
+ <p>  unshare --map-root-user --user
+  whoami</p>
+</b>
+
+![Screenshot 2024-11-06 at 21 44 40](https://github.com/user-attachments/assets/9db8a36d-9c63-4f67-8a6c-cc9496fc6bb1)
+
+<p>Для того, чтобы увидеть последовательность системмных вызовов, которые были сделаны при обработке команды whoami можно воспользоватся командой :</p>
+<b>
+ <p>apk add --update strace
+strace -c -f -S name whoami 2>&1 1>/dev/null | tail -n +3 | head -n -2 | awk '{print $(NF)}'</p>
+ <p>strace whoami</p>
+</b>
+
+![Screenshot 2024-11-06 at 21 47 45](https://github.com/user-attachments/assets/3341c7a0-3f8c-499f-a10d-50a27a5e377b)
+
+<h3>Step 4: Selectively remove syscalls</h3>
