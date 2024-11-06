@@ -305,4 +305,5 @@ cat ./seccomp-profiles/default-no-chmod.json | grep chmod
 
 ![Screenshot 2024-11-06 at 21 59 45](https://github.com/user-attachments/assets/07370a24-3f20-4820-82a6-f719643d15d4)
 
+<h3>Linux kernel capabilities and Docker</h3>
 
