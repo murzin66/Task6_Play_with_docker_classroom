@@ -307,3 +307,98 @@ cat ./seccomp-profiles/default-no-chmod.json | grep chmod
 
 <h3>Linux kernel capabilities and Docker</h3>
 
+<h3>Introduction to capabilities</h3>
+
+Ядро линукс способно разделить привилегии пользователя на отдельные блоки, называемые возможностями. Почти все специальные полномочия, связанные с root пользователем Linux, разбиты на отдельные возможности. Docker накладывает определенные ограничения, которые значительно упрощают работу с возможностями. Например, возможности файла хранятся в его расширенных атрибутах, а расширенные атрибуты удаляются при сборке образов Docker.
+
+В среде без файловых возможностей приложения не могут повышать свои привилегии за пределы bounding set. Docker устанавливает граничное множество перед запуском контейнера. С помощью команд Docker можно добавлять или удалять возможности из граничного набора.
+
+<h3>Step 2: Working with Docker and capabilities</h3>
+
+Начиная с версии Докер 1.12 существует 3 способа использования возможностей 
+
++ Запускать контейнеры от имени root с большим набором возможностей и пытаться управлять возможностями внутри контейнера вручную.
++ Запускать контейнеры от имени root с ограниченным набором возможностей и никогда не изменять их внутри контейнера.
++ Запускать контейнеры от имени непривилегированного пользователя без каких-либо возможностей.
+
+Существующие команды для управления возможностями (будут использоваться в следующем подразделе):
+
++ docker run --rm -it --cap-drop $CAP alpine sh - сбросить возможности из аккаунта root контейнера
++ docker run --rm -it --cap-add $CAP alpine sh - Добавить возможности в root аккаунт контейнера
++ docker run --rm -it --cap-drop ALL --cap-add $CAP alpine sh - отказаться от всех возможностей, а затем явно добавить отдельные возможности в корневую учетную запись контейнера.
+
+<h3>Step 3: Testing Docker capabilities</h3>
+
+Запустим контейнер и убедимся в том, что root пользователь может изменять права на файлы
+
+<b> docker run --rm -it alpine chown nobody /</b>
+
+![Screenshot 2024-11-06 at 22 54 16](https://github.com/user-attachments/assets/5eed0d7c-9dc2-4544-92a7-7996ab002ea1)
+
+Контейнер успешно запустился, поскольку по умолчанию новые контейнеры запускаются с правами пользователя root. Этот пользователь root по умолчанию имеет права CAP_CHOWN.
+
+Запустим другой контейнер и удалим все возможности кроме CHOWN:
+
+<b>docker run --rm -it --cap-drop ALL --cap-add CHOWN alpine chown nobody /</b>
+
+![Screenshot 2024-11-06 at 22 59 21](https://github.com/user-attachments/assets/42dfb94b-7bc8-4124-8f12-2fb4756deed9)
+
+Контейнер успешно запустился,  поскольку данной возможни достаточно для запуска контейнера. Попробуем убрать возможность CHOWN и запустить контейнер:
+
+<b>  docker run --rm -it --cap-drop CHOWN alpine chown nobody / </b> 
+
+![Screenshot 2024-11-06 at 23 00 20](https://github.com/user-attachments/assets/fa86dbbc-cbaa-4990-ac98-b382850c7bc2)
+
+Контейнер не был запущен, поскольку была удалена требуемая возможность. Попробуем добавить возможность CHOWN для пользователя отличого от root:
+
+![Screenshot 2024-11-06 at 23 02 50](https://github.com/user-attachments/assets/3d04f414-f374-489c-966c-926edfa1daa7)
+
+Контейнер не был запущен, поскольку Docker не поддерживает установку возможностей для пользователей, отличных от root
+
+<h3>Step 4: Extra for experts</h3>
+
+Для вывода возможностей можно воспользоваться пакетом libcap:
+
+<b>    docker run --rm --network=host -it alpine sh -c 'apk add -U libcap; capsh --print'</b>
+
+![Screenshot 2024-11-06 at 23 07 32](https://github.com/user-attachments/assets/e7e02d63-d986-4720-806d-d5aa298a9cce)
+
+Для эуспериментальных целей команда capsh является полезной, вывести справку по ее использованию можно с помощью команды:
+
+<b>docker run --rm --network=host -it alpine sh -c 'apk add -U libcap;capsh --help' </b>
+
+![Screenshot 2024-11-06 at 23 09 25](https://github.com/user-attachments/assets/e61bb7f8-7631-4271-9e9c-d2845158c936)
+
+<h3> Docker networking hands-on lab</h3>
+
+<h3> Section 1: Networking Basics</h3>
+
+Главная команда для конфигурирования сети - docker network, при ее выполнении появляется подсказка по использованию:
+
+<b>docker network</b>
+
+![Screenshot 2024-11-06 at 23 15 31](https://github.com/user-attachments/assets/f08fc8dc-a46c-49fb-adf7-707ca8583867)
+
+Для вывода существующих сетей контейнера используется команда:
+
+<b>docker network ls</b>
+
+![Screenshot 2024-11-06 at 23 17 11](https://github.com/user-attachments/assets/1d37ae29-88ed-4dc3-85c6-6d7b78bd62f4)
+
+Для просмотра подробных параметров конфигурации сети используется команда:
+
+<b> docker network inspect bridge </b>
+
+![Screenshot 2024-11-06 at 23 19 07](https://github.com/user-attachments/assets/901e7b83-6375-44d8-83e9-5938483194b7)
+
+Для просмотра установленных драйверов сети используется команда:
+
+<b>docker info</b>
+
+![Screenshot 2024-11-06 at 23 21 19](https://github.com/user-attachments/assets/a7837228-8c70-40c3-b4d2-a8ee629abc57)
+
+![Screenshot 2024-11-06 at 23 21 31](https://github.com/user-attachments/assets/3e4c7424-3067-4d86-968e-3bfa26753ced)
+
+Среди установленных плагинов сети видим bridge, host,macvlan, null, and overlay драйверы.
+
+
