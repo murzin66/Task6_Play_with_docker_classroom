@@ -11,7 +11,6 @@
 
 # 1 Getting Started Walk-through for IT Pros and System Administrators
 
-<a id="basics"></a>
 ## 1.1 Basics
 
 <h3>1.0 Running your first container</h3>
