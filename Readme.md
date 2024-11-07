@@ -5,7 +5,6 @@
 ## Содержание
 [1. Getting Started Walk-through for IT Pros and System Administrators](#1.Getting-Started-Walk-through-for-IT-Pros-and-System-Administrators)
 
-&nbsp;&nbsp;&nbsp;&nbsp;[1.1 Basics](##1.1-Basics)
 
 [2. Getting Started Walk-through for Developers](#Getting-Started-Walk-through-for-Developers)
 
