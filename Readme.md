@@ -3,7 +3,9 @@
 Данный репозторий предназначен для отчета по выполнению тренировочных заданий https://training.play-with-docker.com/
 
 ## Содержание
-[Getting Started Walk-through for IT Pros and System Administrators](#Getting-Started-Walk-through-for-IT-Pros-and-System-Administrators)
+[1. Getting Started Walk-through for IT Pros and System Administrators](#Getting-Started-Walk-through-for-IT-Pros-and-System-Administrators)
+
+[2. Getting Started Walk-through for Developers](#Getting-Started-Walk-through-for-Developers)
 
 # Getting Started Walk-through for IT Pros and System Administrators
 
@@ -698,7 +700,7 @@ Swarm менеджер запланировал 7 контейнеров в кл
 
 ![Screenshot 2024-11-07 at 10 25 54](https://github.com/user-attachments/assets/a4a47185-f00f-4233-92db-c09510136108)
 
-<h1>Getting Started Walk-through for Developers</h1>
+# Getting Started Walk-through for Developers
 
 <h2>Basics</h2>
 
