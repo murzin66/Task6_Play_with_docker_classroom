@@ -7,13 +7,23 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;[1.1 Basics](#1-1-basics)
 
+&nbsp;&nbsp;&nbsp;&nbsp;[1.2 Digging Deeper](#1-2-digging-deeper)
+
+&nbsp;&nbsp;&nbsp;&nbsp;[1.3 Moving to production](#1-3-moving-to-production)
+
 [2 Getting Started Walk-through for Developers](#Getting-Started-Walk-through-for-Developers)
+
+&nbsp;&nbsp;&nbsp;&nbsp;[2.1 Basics](#2-1-basics)
+
+&nbsp;&nbsp;&nbsp;&nbsp;[2.2 Digging Deeper](#2-2-digging-deeper)
+
+&nbsp;&nbsp;&nbsp;&nbsp;[2.3 Moving to production](#2-3-moving-to-staging)
 
 # 1 Getting Started Walk-through for IT Pros and System Administrators
 
 <h3 id ="1-1-basics"> 1.1 Basics</h3>
 
-<h3>1.0 Running your first container</h3>
+<h3> Running your first container</h3>
 Выполнемая команда:
 docker container run hello-world
 Результат в консоли:
@@ -25,7 +35,7 @@ docker container run hello-world
 при запуске движок докера попытался осуществить поиск требуемого образа локально. После того,как движок не нашел образ докера локально, произошел поиск в Докер-регистре по умолчанию, которм вляется Докер хаб.
 
 
-<h3>1.1 Docker images</h3>
+<h3>Docker images</h3>
 
 
 В данной работе производится загрузка докер-образа linux alpine с Docker Hub. выполняемые команды:
@@ -81,7 +91,7 @@ docker container run alpine /bin/sh
 
 ![Screenshot 2024-11-04 at 23 37 58](https://github.com/user-attachments/assets/5fc9067e-cea5-45d4-bcf4-f7bd202bbe1f)
 
-<h3>1.2 Container isolation</h3>
+<h3>Container isolation</h3>
 
 <p>Разберемся подробнее с концепциией изоляции контейнеров. Для этого выполним следующие команды:</p>
 docker container run -it alpine /bin/ash
