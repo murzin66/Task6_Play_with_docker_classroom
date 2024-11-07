@@ -7,15 +7,11 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;[1.1 Basics](#1-1-basics)
 
-[1.1 Basics](#1-1-basics)
-
-
-
 [2 Getting Started Walk-through for Developers](#Getting-Started-Walk-through-for-Developers)
 
 # 1 Getting Started Walk-through for IT Pros and System Administrators
 
-## 1.1 Basics
+<h3 id ="1-1-basics"> 1.1 Basics</h3>
 
 <h3>1.0 Running your first container</h3>
 Выполнемая команда:
