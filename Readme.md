@@ -2,8 +2,8 @@
 
 Данный репозторий предназначен для отчета по выполнению тренировочных заданий https://training.play-with-docker.com/
 
-# Содержание
-## [Getting Started Walk-through for IT Pros and System Administrators](#Getting Started Walk-through for IT Pros and System Administrators)
+## Содержание
+[Getting Started Walk-through for IT Pros and System Administrators](#Getting Started Walk-through for IT Pros and System Administrators)
 ##
 <h1>Getting Started Walk-through for IT Pros and System Administrators</h1>
 
