@@ -579,4 +579,117 @@ cat /etc/resolv.conf
 
 ![Screenshot 2024-11-07 at 01 29 49](https://github.com/user-attachments/assets/e60a6275-edd2-42a6-809d-d3f8a6d9bcb1)
 
+<h3>Orchestration<h3>
+<h3>Section 1: What is Orchestration</h3>
+
+Оркестрация необходима при разработке выскоко-нагруженных приложений с высокими требованиями доступности. Механизм оркестрации позволяет автоматически распределять нагрузку между узлами приложения, в случае если например один из узлов входит из строя. Развертывание приложения вручную является трудоемким, поскольку необходимо прописывать ssh для каждой машины самостоятельно, с помощью инструментов оркестровки  можно освободиться от большей части этой ручной работы и позволить автоматизации выполнить всю тяжелую работу
+
+Запустим контейнер в первом узле: <b>docker run -dt ubuntu sleep infinity</b>
+
+![Screenshot 2024-11-07 at 09 57 57](https://github.com/user-attachments/assets/4a3f85fe-b0fb-43d0-b06a-ed13fc96bc2e)
+
+Убедимся в том, что контейнер запущен <b>docker ps</b>
+
+![Screenshot 2024-11-07 at 09 59 27](https://github.com/user-attachments/assets/95e203f0-6b2c-449f-879d-13f79a79b839)
+
+Запустим swarm менеджер с помощью команды <b> docker swarm init --advertise-addr $(hostname -i)</b>
+
+![Screenshot 2024-11-07 at 10 00 37](https://github.com/user-attachments/assets/0761f0db-890e-4dac-b5cf-0e92a6ec45a3)
+
+С помощью команды <b> docker info</b> можно убедиться в том, что узел 1 успешно сконфигурирован как менеджер
+
+![Screenshot 2024-11-07 at 10 01 55](https://github.com/user-attachments/assets/6bc6ccd4-f447-44ee-9bec-f89e88cb94fe)
+
+![Screenshot 2024-11-07 at 10 02 12](https://github.com/user-attachments/assets/97908a5a-81c1-40bc-a758-f60df9dac2bb)
+
+Добавим узлы 2 и 3 командой <b>docker swarm join ...</b>
+
+![Screenshot 2024-11-07 at 10 03 02](https://github.com/user-attachments/assets/fbcdc3fb-2544-4a26-9ff9-63171ee24329)
+
+![Screenshot 2024-11-07 at 10 03 15](https://github.com/user-attachments/assets/691c5357-da16-4a3a-93d0-2fcacaaaf3fe)
+
+Убедимся в том, что узлы 2 и 3 были успешно добавлены с помощью выполнения команды <b>docker node ls</b> в узле 1
+
+![Screenshot 2024-11-07 at 10 04 20](https://github.com/user-attachments/assets/66bf851a-d355-4f8a-96a1-89f3fe85d8ac)
+
+Развернем сервис sleep через docker swarm с помощью команды 
+
+<b> docker service update --replicas 7 sleep-app </b>
+
+![Screenshot 2024-11-07 at 10 07 23](https://github.com/user-attachments/assets/7aa2ea6f-bd9f-42f2-80e9-af587e361baa)
+
+Swarm менеджер запланировал 7 контейнеров в кластере. Убедимся в том, что число контейнеров 7. Просмотрим список работающих контейнеров с помощью команды 
+
+<b>docker service ps sleep-app</b>
+
+![Screenshot 2024-11-07 at 10 09 25](https://github.com/user-attachments/assets/fd805850-2fe5-412b-8a94-f6d480cadf80)
+
+![Screenshot 2024-11-07 at 10 09 35](https://github.com/user-attachments/assets/9d295d13-5b30-4e44-8a88-f6256c5bea0a)
+
+Представим, что необходимо снизить число работающих контейнеров до 4, необходимо выполнить команду :
+
+<b>docker service update --replicas 4 sleep-app </b>
+
+ ![Screenshot 2024-11-07 at 10 11 20](https://github.com/user-attachments/assets/173e55e9-93fe-4bc2-b893-67a1197ee332)
+
+Убедимся в том, что число контейнеров уменьшилось до 4 : 
+
+<b>docker service ps sleep-app</b>
+
+![Screenshot 2024-11-07 at 10 12 12](https://github.com/user-attachments/assets/23b5b774-2a8c-458d-b143-b0f251f27337)
+
+Допустим, необходимо провести какие-то работы и вывести из строя один из узлов (например второй). Просмотрим состояние узлов в узле менеджера:
+
+<b> docker node ls </b>
+
+![Screenshot 2024-11-07 at 10 14 52](https://github.com/user-attachments/assets/6c0697e8-1821-4d20-baf6-50d75c7b63f8)
+
+Просмотрим контейнеры, зыпущенные на втором узле
+
+<b> docker ps </b>
+
+![Screenshot 2024-11-07 at 10 15 12](https://github.com/user-attachments/assets/4be1a43d-4a7d-4eae-9e80-4ea158afbe2a)
+
+Выполним команду для вывода из строя узла 2, подставляем в команду ID второго узла, далее просмотрим список узлов
+
+<b> docker node update --availability drain yournodeid</b>
+<b>docker node ls</b>
+
+![Screenshot 2024-11-07 at 10 17 31](https://github.com/user-attachments/assets/2af2d539-cac5-4c7d-8cc3-a7737e756b21)
+
+Просмотрим список контейнеров, запущенных во втором узле
+
+<b>docker ps</b>
+
+![Screenshot 2024-11-07 at 10 18 49](https://github.com/user-attachments/assets/c80b4bba-5b11-4543-a15a-99a04f1f46f9)
+
+Убеждаемся в том, что приложение а данном узле было остановлено. Просмотрим снова список работающих узлов, убедимся в том, что второй узел был заменен, нагрузка перераспределена между оставшимися контейнерами.
+
+<b>docker service ps sleep-app </b>
+
+![Screenshot 2024-11-07 at 10 19 33](https://github.com/user-attachments/assets/db8e2219-d7c2-4791-be34-4b460174a24c)
+
+Удалим созданный сервис:
+
+<b>docker service rm sleep-app</b>
+
+![Screenshot 2024-11-07 at 10 21 38](https://github.com/user-attachments/assets/65335672-0a9d-4b25-847a-dcc7c27609a0)
+
+Просмотрим список запущеных контейнеров:
+<b> docker ps</b>
+
+![Screenshot 2024-11-07 at 10 23 19](https://github.com/user-attachments/assets/8f18d952-ccad-499a-b463-5ac35a516dc1)
+
+остановим запущенный контейнер с помощью команды <b>docker kill</b>
+
+![Screenshot 2024-11-07 at 10 24 07](https://github.com/user-attachments/assets/a478a27e-538b-44e0-b50d-01d4d26d9aa6)
+
+Удалим запущенные узлы из swarm командой <b> docker swarm leave --force</b>
+
+![Screenshot 2024-11-07 at 10 25 37](https://github.com/user-attachments/assets/81fa508d-4946-4ea5-8989-11d68193a3ef)
+
+![Screenshot 2024-11-07 at 10 25 46](https://github.com/user-attachments/assets/be4c4550-8949-4e33-adfe-c27820630802)
+
+![Screenshot 2024-11-07 at 10 25 54](https://github.com/user-attachments/assets/a4a47185-f00f-4233-92db-c09510136108)
+
 
