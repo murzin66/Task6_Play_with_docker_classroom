@@ -858,6 +858,18 @@ Swarm менеджер запланировал 7 контейнеров в кл
 ![Screenshot 2024-11-07 at 20 19 06](https://github.com/user-attachments/assets/67b69a92-6bd7-4279-b58c-a706ae9ef3fe)
 
 -----------
+КОД
+![Screenshot 2024-11-07 at 21 32 04](https://github.com/user-attachments/assets/5301fad1-3f3b-44ea-87b0-9d5510b4ee97)
+
+![Screenshot 2024-11-07 at 21 32 34](https://github.com/user-attachments/assets/88872de3-259c-4040-b9ef-a705bb9a8b45)
+
+![Screenshot 2024-11-07 at 21 32 46](https://github.com/user-attachments/assets/da6910c1-7c0a-454b-8e09-bcd23fdf64d3)
+
+
+
+
+КОД
+-----------
 измененный сайт
 
 ![Screenshot 2024-11-07 at 20 19 59](https://github.com/user-attachments/assets/efbc0cce-e11f-4831-9a60-de935f7b9b1a)
