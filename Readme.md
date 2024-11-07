@@ -857,10 +857,13 @@ Swarm менеджер запланировал 7 контейнеров в кл
 
 ![Screenshot 2024-11-07 at 20 19 06](https://github.com/user-attachments/assets/67b69a92-6bd7-4279-b58c-a706ae9ef3fe)
 
------------
-КОД
+Заменим файл index.html  на файл index-new.html из клонированнаго ранее git репозитория:
+ 
+<b> cp index-new.html index.html</b>
 
 ![Screenshot 2024-11-07 at 21 32 04](https://github.com/user-attachments/assets/5301fad1-3f3b-44ea-87b0-9d5510b4ee97)
+
+Как результат увидим обновленный сайт 
 
 ![Screenshot 2024-11-07 at 21 32 34](https://github.com/user-attachments/assets/88872de3-259c-4040-b9ef-a705bb9a8b45)
 
