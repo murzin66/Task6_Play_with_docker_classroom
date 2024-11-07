@@ -834,7 +834,26 @@ Swarm менеджер запланировал 7 контейнеров в кл
 
 ![Screenshot 2024-11-07 at 20 19 06](https://github.com/user-attachments/assets/67b69a92-6bd7-4279-b58c-a706ae9ef3fe)
 
-Измененный сайт:
+После просмотра сайта остаовим контейнер и удалим его:
+<b> docker container rm --force linux_tweet_app</b>
+
+![Screenshot 2024-11-07 at 21 24 20](https://github.com/user-attachments/assets/bce2cf1c-2ce8-41a3-a126-093303d964e9)
+
+Запустим контейнер, воспользуемся командой mount, чтобы смонтировать текущую директорию в директорию контейнера:
+
+<b>
+ docker container run \
+ --detach \
+ --publish 80:80 \
+ --name linux_tweet_app \
+ --mount type=bind,source="$(pwd)",target=/usr/share/nginx/html \
+ $DOCKERID/linux_tweet_app:1.0
+</b>
+
+
+сайт:
+![Screenshot 2024-11-07 at 21 26 49](https://github.com/user-attachments/assets/7ff6484f-574c-4802-89cc-46e6b85569f3)
+измененный сайт
 
 ![Screenshot 2024-11-07 at 20 19 59](https://github.com/user-attachments/assets/efbc0cce-e11f-4831-9a60-de935f7b9b1a)
 
