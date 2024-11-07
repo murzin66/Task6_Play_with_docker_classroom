@@ -1,4 +1,5 @@
 Автор: Мурзин Михаил группа 4207
+
 Данный репозторий предназначен для отчета по выполнению тренировочных заданий https://training.play-with-docker.com/
 
 <h1>Getting Started Walk-through for IT Pros and System Administrators</h1>
@@ -692,4 +693,163 @@ Swarm менеджер запланировал 7 контейнеров в кл
 
 ![Screenshot 2024-11-07 at 10 25 54](https://github.com/user-attachments/assets/a4a47185-f00f-4233-92db-c09510136108)
 
+<h1>Getting Started Walk-through for Developers</h1>
+
+<h2>Basics</h2>
+
+<h3>Docker for Beginners - Linux</h3>
+
+Клонируем репозиторий для лаборной работы
+
+<b>git clone https://github.com/dockersamples/linux_tweet_app</b>
+
+![Screenshot 2024-11-07 at 20 27 53](https://github.com/user-attachments/assets/c84547bb-82dc-43f1-a69e-781869988cee)
+
+Запустим контейнер linux alpine, который выполнит команду hostname и остановится
+
+<b> docker container run alpine hostname</b>
+
+![Screenshot 2024-11-07 at 20 32 55](https://github.com/user-attachments/assets/7f0333da-b326-4900-8365-82c2063858d9)
+
+Данный контенер работает до тех пор, пока не выполнит команду hostname, однако потом не исчезает, продолжает существовать в состоянии exited. 
+Просмотреть список всех контейнеров можно с помощью команды:
+
+<b> docker container ls --all</b>
+
+![Screenshot 2024-11-07 at 20 35 38](https://github.com/user-attachments/assets/33628abc-cb0d-4356-a3e0-05ece594a297)
+
+В списке контейнеров можем найти ранее запущенный и остановленный контейнер. Запустим контейнер Ubuntu и в контейнере запустим bash:
+
+<b> docker container run --interactive --tty --rm ubuntu bash </b>
+
+Использованные ключи:
+
++ --interactive - задает интерактивную сессию
++ --tty - выделяет псевдотерминал
++ --rm - после завершения выполнения контейнер будет удален
+
+Внутри контейнера выполним команды:
+
++ ls / - отображение всех файлов и каталогов текущей директории
++ ps aux - отображение запущеннх процессов в контейнере
++ cat /etc/issue - отображение дистрибутива линукс на основе которого запущен контейнер
++ exit - выход из контейнера
+
+![Screenshot 2024-11-07 at 20 42 56](https://github.com/user-attachments/assets/fdcc7fab-d141-42f8-b1eb-4e1875510ab0)
+
+Просмотрим версию линукс виртуальной машины host:
+
+<b>  cat /etc/issue </b>
+
+![Screenshot 2024-11-07 at 20 47 19](https://github.com/user-attachments/assets/7667f6a1-1504-4ea9-ab02-ccf70f7c6d40)
+
+Запустим mysql контейнер с помощью команды:
+
+ <b>docker container run \
+ --detach \
+ --name mydb \
+ -e MYSQL_ROOT_PASSWORD=my-secret-pw \
+ mysql:latest</b>
+
+В команде использованы ключи:
+
++ --detach - запускает контейнер в фоновом режиме
++ --name - имя контейнера
++ -e - позволяет задать пароль как переменную среды
+
+![Screenshot 2024-11-07 at 20 54 34](https://github.com/user-attachments/assets/09207d80-0897-4bd6-8665-483ee716ff31)
+
+Просмотрим список запущенных контейнеров, обратим внимание, что контейнер mysql запущен:
+
+<b>docker container ls</b>
+
+![Screenshot 2024-11-07 at 20 56 03](https://github.com/user-attachments/assets/1cf66015-4cf5-475d-b56e-d769bb121698)
+
+Также существует возможность просмотра логов контейнера с помощью команды <b> docker container logs mydb</b>
+
+![Screenshot 2024-11-07 at 20 58 04](https://github.com/user-attachments/assets/24f18822-9360-4972-85ab-ae7054be17df)
+
+Список запущенных команд внутри контейнера можно просмотреть с помощью команды <b>  docker container top mydb</b>
+
+![Screenshot 2024-11-07 at 20 59 44](https://github.com/user-attachments/assets/4957e8a0-8ca0-40be-b71d-c4c29841f9ca)
+
+Запросим версию mysql с помощью команды <b> docker exec -it mydb \
+ mysql --user=root --password=$MYSQL_ROOT_PASSWORD --version</b>
+
+![Screenshot 2024-11-07 at 21 01 49](https://github.com/user-attachments/assets/cc7a8aff-0fe9-4787-b59d-42264220ca4b)
+
+Выполним аналогичное дествие последовательно, сначала запустив shell внутри контейнера, затем запросив версию mysql, 
+убедимся в том, что результат совпадает с результатом при выполнении предыдущей команды:
+
+<b> docker exec -it mydb sh</b>
+
+<b>  mysql --user=root --password=$MYSQL_ROOT_PASSWORD --version </b>
+
+<b> exit </b>
+
+![Screenshot 2024-11-07 at 21 04 02](https://github.com/user-attachments/assets/2789bcb3-cee7-4b97-9528-3148e74bc149)
+
+<h3>Task 2: Package and run a custom app using Docker</h3>
+
+Переместимся в нужныю директорию, отобразим содержимое докерфайла
+<b>  cd ~/linux_tweet_app </b>
+<b>  cat Dockerfile </b>
+
+![Screenshot 2024-11-07 at 21 06 12](https://github.com/user-attachments/assets/6291de85-0c1f-4e92-bbc6-868fe8763dfd)
+
+Рассмотрим синтаксис докерфайла:
+
++ FROM - определяет базовый образ на основе которого строится контейнер
++ COPY - копирует файлы из хоста Docker в необходимую директорию докер образа
++ EXPOSE - фиксирует занимаемые приложением порты
++ CMD - определяет команды, которые необходимо выполнить при запуске контейнера
+
+Зададим переменную среды DOCKERID, проверим, что переменная среды успешно задана
+
+<b>export DOCKERID=DOCKERID</b>
+<b> echo $DOCKERID</b>
+
+![Screenshot 2024-11-07 at 21 13 05](https://github.com/user-attachments/assets/25308ee8-ba8d-4b58-ab94-600bc8626be2)
+
+Соберем докер образ из докер файла, зададим таг контейнера:
+
+<b>docker image build --tag $DOCKERID/linux_tweet_app:1.0 .</b>
+
+![Screenshot 2024-11-07 at 21 14 38](https://github.com/user-attachments/assets/8c0dd18e-3f9d-48d8-a57d-28721671ccfd)
+
+Запустим докер контейнер командой:
+
+<b> docker container run \
+ --detach \
+ --publish 80:80 \
+ --name linux_tweet_app \
+ $DOCKERID/linux_tweet_app:1.0</b>
+ 
+![Screenshot 2024-11-07 at 21 15 54](https://github.com/user-attachments/assets/717db3c9-d111-4d8c-a6f5-d5f8500a46df)
+
+При запуске контейнера использовался ключ --publish, который необходим для разрешения трафика между портами докер хоста и контейнера. 
+После запуска контейнера убедимся в том, что на порту 80 контейнера стала доступна тестовая страница:
+
+![Screenshot 2024-11-07 at 20 19 06](https://github.com/user-attachments/assets/67b69a92-6bd7-4279-b58c-a706ae9ef3fe)
+
+Измененный сайт:
+
+![Screenshot 2024-11-07 at 20 19 59](https://github.com/user-attachments/assets/efbc0cce-e11f-4831-9a60-de935f7b9b1a)
+
+Исходный веб-сайт:
+
+![Screenshot 2024-11-07 at 20 20 39](https://github.com/user-attachments/assets/a47cdedd-3fdc-47ba-b955-5efda6b7e46e)
+
+Test new website:
+
+![Screenshot 2024-11-07 at 20 21 45](https://github.com/user-attachments/assets/d82779a6-faa6-4b0a-bd04-3aef05ff9ea6)
+
+Old version of web site:
+
+![Screenshot 2024-11-07 at 20 22 29](https://github.com/user-attachments/assets/7468be4b-b8ed-4b40-8947-7e277edcd324)
+
+DockerHub
+![Screenshot 2024-11-07 at 20 26 41](https://github.com/user-attachments/assets/4462b65f-74a6-42af-9c32-a94e2febb73d)
+
+![Screenshot 2024-11-07 at 20 27 28](https://github.com/user-attachments/assets/c17909d3-b33f-4f66-b96c-8cd82833af0f)
 
