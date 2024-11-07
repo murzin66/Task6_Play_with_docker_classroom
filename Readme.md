@@ -859,6 +859,7 @@ Swarm менеджер запланировал 7 контейнеров в кл
 
 -----------
 КОД
+
 ![Screenshot 2024-11-07 at 21 32 04](https://github.com/user-attachments/assets/5301fad1-3f3b-44ea-87b0-9d5510b4ee97)
 
 ![Screenshot 2024-11-07 at 21 32 34](https://github.com/user-attachments/assets/88872de3-259c-4040-b9ef-a705bb9a8b45)
@@ -866,6 +867,23 @@ Swarm менеджер запланировал 7 контейнеров в кл
 ![Screenshot 2024-11-07 at 21 32 46](https://github.com/user-attachments/assets/da6910c1-7c0a-454b-8e09-bcd23fdf64d3)
 
 
+![Screenshot 2024-11-07 at 21 33 39](https://github.com/user-attachments/assets/add4c8ce-f9a8-4812-a33b-7c38ab7b9c73)
+
+![Screenshot 2024-11-07 at 21 33 53](https://github.com/user-attachments/assets/fe500adf-f147-4ff6-b68f-fac3149cf6d4)
+
+![Screenshot 2024-11-07 at 21 34 07](https://github.com/user-attachments/assets/ed4cf845-6d64-44bc-a921-e966b0c55d10)
+
+![Screenshot 2024-11-07 at 21 34 21](https://github.com/user-attachments/assets/db39fcca-ca39-4488-8006-db5627165888)
+
+![Screenshot 2024-11-07 at 21 34 30](https://github.com/user-attachments/assets/cd97c8c6-fe6c-4b34-9026-f97d68a7e932)
+
+![Screenshot 2024-11-07 at 21 34 49](https://github.com/user-attachments/assets/b333081c-89fa-4992-94a1-dac554cdf01f)
+
+![Screenshot 2024-11-07 at 21 35 00](https://github.com/user-attachments/assets/909a29ff-1566-4c92-8d2f-c47d45c27235)
+
+![Screenshot 2024-11-07 at 21 35 25](https://github.com/user-attachments/assets/bac068dd-df18-4009-82a9-2968192fac65)
+
+![Screenshot 2024-11-07 at 21 35 35](https://github.com/user-attachments/assets/d5c8d070-5013-48b9-991d-24e62863085c)
 
 
 КОД
