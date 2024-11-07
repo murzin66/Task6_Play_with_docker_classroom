@@ -9,7 +9,7 @@
 
 [2. Getting Started Walk-through for Developers](#Getting-Started-Walk-through-for-Developers)
 
-# 1.Getting Started Walk-through for IT Pros and System Administrators
+# 1 Getting Started Walk-through for IT Pros and System Administrators
 
 
 ## 1 Basics
