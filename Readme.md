@@ -500,7 +500,7 @@ apt-get update && apt-get install -y iputils-ping
 
 ![Screenshot 2024-11-07 at 01 00 53](https://github.com/user-attachments/assets/55a70d75-0c7a-4b7c-9e3c-35f867fe8425)
 
-Убедимся в том, что сеть была успешно создана с помощью команды <b>docker network ls/ <b> в узле менеджера
+Убедимся в том, что сеть была успешно создана с помощью команды <b>docker network ls </b> в узле менеджера
 
 ![Screenshot 2024-11-07 at 01 04 17](https://github.com/user-attachments/assets/5abfcef3-dca0-4675-a79f-cb898c4fc9ca)
 
@@ -517,13 +517,15 @@ apt-get update && apt-get install -y iputils-ping
 Выполним данные команды для создания сервиса с двумя репликами:
 
 <b>
-+ docker service create --name myservice \
+ 
++  docker service create --name myservice \
 
 +  --network overnet \
 
 + --replicas 2 \
 
 + ubuntu sleep infinity
+
 </b>
 
 ![Screenshot 2024-11-07 at 01 08 34](https://github.com/user-attachments/assets/6e0a98fa-7221-4fdb-ae2d-4b5645ccf373)
