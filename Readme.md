@@ -9,7 +9,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;[1.2 Digging Deeper](#1-2-digging-deeper)
 
-&nbsp;&nbsp;&nbsp;&nbsp;[1.3 Moving to production](#1-3-moving-to-production)
+&nbsp;&nbsp;&nbsp;&nbsp;[1.3 Moving to production ( no active resources on portal https://training.play-with-docker.com/)](#1-3-moving-to-production)
 
 [2 Getting Started Walk-through for Developers](#Getting-Started-Walk-through-for-Developers)
 
