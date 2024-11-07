@@ -3,14 +3,15 @@
 Данный репозторий предназначен для отчета по выполнению тренировочных заданий https://training.play-with-docker.com/
 
 ## Содержание
-[1. Getting Started Walk-through for IT Pros and System Administrators](#Getting-Started-Walk-through-for-IT-Pros-and-System-Administrators)
+[1. Getting Started Walk-through for IT Pros and System Administrators](#1.Getting-Started-Walk-through-for-IT-Pros-and-System-Administrators)
+[1.1 Basics](##1.1-Basics)
 
 [2. Getting Started Walk-through for Developers](#Getting-Started-Walk-through-for-Developers)
 
-# Getting Started Walk-through for IT Pros and System Administrators
+# 1.Getting Started Walk-through for IT Pros and System Administrators
 
 
-<h2>Basics</h2>
+## 1.1 Basics
 
 <h3>1.0 Running your first container</h3>
 Выполнемая команда:
