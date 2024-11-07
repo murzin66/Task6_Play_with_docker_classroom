@@ -863,51 +863,104 @@ Swarm менеджер запланировал 7 контейнеров в кл
 
 ![Screenshot 2024-11-07 at 21 32 04](https://github.com/user-attachments/assets/5301fad1-3f3b-44ea-87b0-9d5510b4ee97)
 
-Как результат увидим обновленный сайт 
-
-![Screenshot 2024-11-07 at 21 32 34](https://github.com/user-attachments/assets/88872de3-259c-4040-b9ef-a705bb9a8b45)
-
-![Screenshot 2024-11-07 at 21 32 46](https://github.com/user-attachments/assets/da6910c1-7c0a-454b-8e09-bcd23fdf64d3)
-
-
-![Screenshot 2024-11-07 at 21 33 39](https://github.com/user-attachments/assets/add4c8ce-f9a8-4812-a33b-7c38ab7b9c73)
-
-![Screenshot 2024-11-07 at 21 33 53](https://github.com/user-attachments/assets/fe500adf-f147-4ff6-b68f-fac3149cf6d4)
-
-![Screenshot 2024-11-07 at 21 34 07](https://github.com/user-attachments/assets/ed4cf845-6d64-44bc-a921-e966b0c55d10)
-
-![Screenshot 2024-11-07 at 21 34 21](https://github.com/user-attachments/assets/db39fcca-ca39-4488-8006-db5627165888)
-
-![Screenshot 2024-11-07 at 21 34 30](https://github.com/user-attachments/assets/cd97c8c6-fe6c-4b34-9026-f97d68a7e932)
-
-![Screenshot 2024-11-07 at 21 34 49](https://github.com/user-attachments/assets/b333081c-89fa-4992-94a1-dac554cdf01f)
-
-![Screenshot 2024-11-07 at 21 35 00](https://github.com/user-attachments/assets/909a29ff-1566-4c92-8d2f-c47d45c27235)
-
-![Screenshot 2024-11-07 at 21 35 25](https://github.com/user-attachments/assets/bac068dd-df18-4009-82a9-2968192fac65)
-
-![Screenshot 2024-11-07 at 21 35 35](https://github.com/user-attachments/assets/d5c8d070-5013-48b9-991d-24e62863085c)
-
-
-КОД
------------
-измененный сайт
+Как результат увидим обновленный сайт на порту 80
 
 ![Screenshot 2024-11-07 at 20 19 59](https://github.com/user-attachments/assets/efbc0cce-e11f-4831-9a60-de935f7b9b1a)
 
-Исходный веб-сайт:
+Остановим и удалим текущий контейнер 
+
+<b> docker rm --force linux_tweet_app </b>
+
+![Screenshot 2024-11-07 at 21 32 34](https://github.com/user-attachments/assets/88872de3-259c-4040-b9ef-a705bb9a8b45)
+
+Повторим текущий запуск без привязки:
+
+<b>
+ docker container run \
+ --detach \
+ --publish 80:80 \
+ --name linux_tweet_app \
+ $DOCKERID/linux_tweet_app:1.0
+</b>
+
+![Screenshot 2024-11-07 at 21 32 46](https://github.com/user-attachments/assets/da6910c1-7c0a-454b-8e09-bcd23fdf64d3)
+
+ОБратим внимание на то, что сайт имеет первоначальный вид, поскольку отключена привязка и в контейнере находится оргинальный index.html
 
 ![Screenshot 2024-11-07 at 20 20 39](https://github.com/user-attachments/assets/a47cdedd-3fdc-47ba-b955-5efda6b7e46e)
 
-Test new website:
+Остановим и удалим текущий контейнер
+
+![Screenshot 2024-11-07 at 21 33 39](https://github.com/user-attachments/assets/add4c8ce-f9a8-4812-a33b-7c38ab7b9c73)
+
+Соберем новый образ и обозначим его как 2.0
+
+<b> docker image build --tag $DOCKERID/linux_tweet_app:2.0 .</b>
+
+![Screenshot 2024-11-07 at 21 33 53](https://github.com/user-attachments/assets/fe500adf-f147-4ff6-b68f-fac3149cf6d4)
+
+Просмотрим список новых контейнеров:
+ 
+ <b>docker image ls</b>
+ 
+![Screenshot 2024-11-07 at 21 34 07](https://github.com/user-attachments/assets/ed4cf845-6d64-44bc-a921-e966b0c55d10)
+
+Запустим контейнер из новой версии образа:
+
+<b> docker container run \
+ --detach \
+ --publish 80:80 \
+ --name linux_tweet_app \
+ $DOCKERID/linux_tweet_app:2.0</b>
+
+
+![Screenshot 2024-11-07 at 21 34 21](https://github.com/user-attachments/assets/db39fcca-ca39-4488-8006-db5627165888)
+
+Как результат, на порту 80 запущена новая версия сайта
+
 
 ![Screenshot 2024-11-07 at 20 21 45](https://github.com/user-attachments/assets/d82779a6-faa6-4b0a-bd04-3aef05ff9ea6)
 
-Old version of web site:
+Запустим на другом порту контейнер на основе старого образа
+
+<b>
+ docker container run \
+ --detach \
+ --publish 8080:80 \
+ --name old_linux_tweet_app \
+ $DOCKERID/linux_tweet_app:1.0
+</b>b
+
+![Screenshot 2024-11-07 at 21 34 30](https://github.com/user-attachments/assets/cd97c8c6-fe6c-4b34-9026-f97d68a7e932)
+
+Убедимся в том, что на соответствующем порту запущена первоначальная версия сайта 
 
 ![Screenshot 2024-11-07 at 20 22 29](https://github.com/user-attachments/assets/7468be4b-b8ed-4b40-8947-7e277edcd324)
 
-DockerHub
+Просмотрим образы, на текущем докер хосте:
+
+<b> docker image ls -f reference="$DOCKERID/*" </b>
+
+![Screenshot 2024-11-07 at 21 34 49](https://github.com/user-attachments/assets/b333081c-89fa-4992-94a1-dac554cdf01f)
+
+Войдем в профиль докер <b> docker login -u username </b>
+
+![Screenshot 2024-11-07 at 21 35 00](https://github.com/user-attachments/assets/909a29ff-1566-4c92-8d2f-c47d45c27235)
+
+Отправим в Docker Hub первую версию контейнера
+
+<b> docker image push $DOCKERID/linux_tweet_app:1.0 </b>
+
+![Screenshot 2024-11-07 at 21 35 25](https://github.com/user-attachments/assets/bac068dd-df18-4009-82a9-2968192fac65)
+
+Отправим в Docker Hub вторую версию контейнера
+
+<b> docker image push $DOCKERID/linux_tweet_app:2.0 </b>
+
+![Screenshot 2024-11-07 at 21 35 35](https://github.com/user-attachments/assets/d5c8d070-5013-48b9-991d-24e62863085c)
+
+Убеждаемся в том, что в профиле Docker Hub образы корректно отображаются
+
 ![Screenshot 2024-11-07 at 20 26 41](https://github.com/user-attachments/assets/4462b65f-74a6-42af-9c32-a94e2febb73d)
 
 ![Screenshot 2024-11-07 at 20 27 28](https://github.com/user-attachments/assets/c17909d3-b33f-4f66-b96c-8cd82833af0f)
