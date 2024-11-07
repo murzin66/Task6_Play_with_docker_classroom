@@ -5,14 +5,14 @@
 ## Содержание
 [1 Getting Started Walk-through for IT Pros and System Administrators](#1-Getting-Started-Walk-through-for-IT-Pros-and-System-Administrators)
 
-&nbsp;&nbsp;&nbsp;&nbsp;[Basics](##Basics)
+&nbsp;&nbsp;&nbsp;&nbsp;[1.1-Basics](##basics)
 
 [2 Getting Started Walk-through for Developers](#Getting-Started-Walk-through-for-Developers)
 
 # 1 Getting Started Walk-through for IT Pros and System Administrators
 
-
-## Basics
+<a id="basics"></a>
+## 1.1 Basics
 
 <h3>1.0 Running your first container</h3>
 Выполнемая команда:
