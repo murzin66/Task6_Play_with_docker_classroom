@@ -4,8 +4,8 @@
 
 ## Содержание
 [Getting Started Walk-through for IT Pros and System Administrators](#Getting Started Walk-through for IT Pros and System Administrators)
-##
-<h1>Getting Started Walk-through for IT Pros and System Administrators</h1>
+
+# Getting Started Walk-through for IT Pros and System Administrators
 
 
 <h2>Basics</h2>
