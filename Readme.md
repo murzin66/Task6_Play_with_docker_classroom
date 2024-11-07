@@ -247,7 +247,7 @@ docker container run -it --network=host ubuntu bash
 
 ![Screenshot 2024-11-06 at 01 20 29](https://github.com/user-attachments/assets/c95754b4-6ea7-4a78-9fec-87c186d185ab)
 
-<h2>Stage 2: Digging deeper</h2>
+<h2 id = "1-2-digging-deeper">Stage 2: Digging deeper</h2>
 <h3>Security Lab: Seccomp</h3>
 <h3>Step 1: Clone the labs GitHub repo</h3>
 <p>В данной работе рассмотрен  seccomp, который предоставляет  песочницу в ядре линукса, который действует как брандмауэр для системых вызовов. 
@@ -713,7 +713,7 @@ Swarm менеджер запланировал 7 контейнеров в кл
 
 # Getting Started Walk-through for Developers
 
-<h2>Basics</h2>
+<h2 id = "2-1-basics">Basics</h2>
 
 <h3>Docker for Beginners - Linux</h3>
 
