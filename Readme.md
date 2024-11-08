@@ -983,4 +983,105 @@ Swarm менеджер запланировал 7 контейнеров в кл
 
 <h3>Application Containerization and Microservice Orchestration</h3>
 
+Клонируем репозиторий для лабораторной работы
+
+<b> git clone https://github.com/ibnesayeed/linkextractor.git
+
+cd linkextractor
+
+git checkout demo </b>
+
+![Screenshot 2024-11-08 at 09 37 40](https://github.com/user-attachments/assets/2a92d290-c560-46ad-b095-29320a6e0980)
+
+Переключимся на ветку step0 и просмотрим файлы внутри
+
+<b>
+git checkout step0
+
+ tree</b>
+
+![Screenshot 2024-11-08 at 09 38 40](https://github.com/user-attachments/assets/f1e2db16-2204-466b-8672-fb788fb01db0)
+
+ Просмотрим содержимое файла lintextractor.py
+
+ <b> cat linkextractor.py </b>
+
+ ![Screenshot 2024-11-08 at 09 39 55](https://github.com/user-attachments/assets/ea8125ff-42d5-4ade-a876-bc37d25537cf)
+
+Данный скрипт на Python импортирует три библиотеки: requests, sys, bs4. При запуске пользователю предоставляется возможность 
+ввести аргумент - URL, к которому будет осуществляться fetch запрос с помощью библиотеки requests. Далее веб-страница будет 
+разобрана на отдельные компоненты с помощью beautiful soap, для того, чтобы вывести href ссылки, содержащиеся на странице.
+
+Попробуем запустить файл с передачей аргумента:
+
+<b> ./linkextractor.py http://example.com/ </b>
+
+![Screenshot 2024-11-08 at 09 46 41](https://github.com/user-attachments/assets/876c85cf-9a54-4118-b439-9ec9cab581a4)
+
+Запуск файла не был осуществлен, поскольку недостаточно прав для запуска этого файла. Просмотрим разрешения для данного файла:
+
+<b>ls -l linkextractor.py</b>
+
+![Screenshot 2024-11-08 at 09 47 48](https://github.com/user-attachments/assets/31e61a54-d9a5-4bca-a5ef-5ca9d5b39b88)
+
+Текущее разрешение -rw-r--r-- говорит о том, что нет разрешения на запуск файла. Попробуем запустить файл с помощью python:
+
+<b>python3 linkextractor.py</b>
+
+![Screenshot 2024-11-08 at 09 50 32](https://github.com/user-attachments/assets/216a4207-39f1-4787-849c-1d66d9857761)
+
+Как результат получаем ошибку импортирования. Мы могли бы установить необходимые пакеты и запустить файл. Зададимся вопросами:
+
++ Является ли скрипт исполняемым?
+  
++ Установлен ли python на данной машине?
+  
++ Можно ли устанавливать ПО на данной машине?
+  
++ Установлен ли pip?
+  
++ Установлены ли библиотеки beautifulsoup4 и requests?
+
+Для решения даных вопросов подойдет коцепция контейнеризации. Попробуем контейнеризовать данный скрипт и запустить его. Переключимся на ветку step1, просмотрим какие файлы находятся в директории, просмотрим содержимое докерфайла:
+
+<b>
+git checkout step1
+
+tree
+
+cat Dockerfile
+</b>
+
+![Screenshot 2024-11-08 at 09 55 57](https://github.com/user-attachments/assets/85da36c0-0b00-4d45-bdc8-76bcb479e6c2)
+
+С помощью докерфайла мы можм подготовить образ для исполнения требуемого скрипта. Данный образ будет построен на образе python. Далее в инструкциях Докерфайла устанавливаем pip и требуемые библиотеки, 
+Далее создаем директорию app, помещаем в нее файл скрипта и задаем разрешение на запуск данного скрипта. Построим образ на основе докер файла:
+
+<b>docker image build --network=host -t linkextractor:step1 .</b>
+
+![Screenshot 2024-11-08 at 10 04 52](https://github.com/user-attachments/assets/c619b605-24ab-4fb9-bfc4-a4e8793715f1)
+
+
+Просмотрим список образов:
+
+<b>docker image ls</b>
+
+![Screenshot 2024-11-08 at 10 05 06](https://github.com/user-attachments/assets/ed8a17be-fb93-462f-b8e5-026d4bddfe62)
+
+Запустим контейнер, передадим в качестве параметра реальную веб-страницу:
+
+<b>docker container run -it --network=host --rm linkextractor:step1 http://example.com/</b>
+
+![Screenshot 2024-11-08 at 10 06 59](https://github.com/user-attachments/assets/15bca352-b776-4b76-b5d7-10bb94b84ab9)
+
+Как результат работы видим корректную ссылку href, которая присутствует на странице. Попробуем передать сайт с большим числом ссылок на странице в качестве параметра:
+
+<b>docker container run -it --network=host --rm linkextractor:step1 https://training.play-with-docker.com/</b>
+
+![Screenshot 2024-11-08 at 10 10 35](https://github.com/user-attachments/assets/da20c2e2-a237-4d73-8c4c-a59450cae0ed)
+
+Можем заметить, что и в данном случае скрипт отработал корректно.
+
+### Step 2: Link Extractor Module with Full URI and Anchor Text
+
 
