@@ -1195,7 +1195,7 @@ tree</b>
 
 <b>cat docker-compose.yml</b>
 
-![Screenshot 2024-11-10 at 21 26 17](https://github.com/user-attachments/assets/80753566-3513-42f8-9535-4e762e672701)
+![Screenshot 2024-11-10 at 23 49 26](https://github.com/user-attachments/assets/c32a5ac2-4dc5-47de-a26c-3d44c9c9aadd)
 
 Список ключевых изменений:
 
@@ -1218,4 +1218,42 @@ tree</b>
 
 <b>docker-compose up -d --build</b>
 
+![Screenshot 2024-11-10 at 23 49 58](https://github.com/user-attachments/assets/bee1d995-b671-4713-8dbf-0690ff0066b2)
 
+Просмотрим список запущенных контейнеров, чтобы убедиться, что необходимые контейнеры запущены
+
+<b>docker container ls</b>
+
+![Screenshot 2024-11-10 at 23 51 51](https://github.com/user-attachments/assets/2d2916df-4939-40f1-8838-275a3fcc1e6a)
+
+Проверим доступ к api интерфейсу, доступ есть, приложение корректно работает:
+
+<b>curl -i http://localhost:5000/api/http://example.com/</b>
+
+![Screenshot 2024-11-10 at 23 57 42](https://github.com/user-attachments/assets/3a959e45-59d2-49ff-9ac2-0fe53effa5a3)
+
+Кроме того, на соотвветствующем порту наблюдаем работающий интерфейс
+
+![Screenshot 2024-11-10 at 23 59 53](https://github.com/user-attachments/assets/7fc4bf0e-1cd8-42df-80eb-dda5c29b5aea)
+
+Модифицируем файл index.php:
+
+<b>sed -i 's/Link Extractor/Super Link Extractor/g' www/index.php</b>
+ 
+![Screenshot 2024-11-11 at 00 00 51](https://github.com/user-attachments/assets/8ebf415d-cb0d-4e35-b65b-7e1d3c60af41)
+
+Перезагрузим страницу, увидим изменение заголовка на странице
+
+![Screenshot 2024-11-11 at 00 02 10](https://github.com/user-attachments/assets/85c0c282-4c89-4674-b193-db85c900e65a)
+
+Отменим последние изменения для чистоты отслеживания git:
+
+<b>git reset --hard</b>
+
+![Screenshot 2024-11-11 at 00 09 03](https://github.com/user-attachments/assets/2a432481-0109-4b37-9640-10901c9824e1)
+
+Завершим работу сервисов командой: <b>docker-compose down</b>
+
+![Screenshot 2024-11-11 at 00 12 46](https://github.com/user-attachments/assets/bddda8e2-5489-4d8c-a71b-13b5b178bb14)
+
+###Step 5
