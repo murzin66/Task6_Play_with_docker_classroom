@@ -1195,7 +1195,8 @@ tree</b>
 
 <b>cat docker-compose.yml</b>
 
-![Screenshot 2024-11-10 at 23 49 26](https://github.com/user-attachments/assets/c32a5ac2-4dc5-47de-a26c-3d44c9c9aadd)
+![Screenshot 2024-11-11 at 00 14 10](https://github.com/user-attachments/assets/02715566-b2ef-405a-9d83-d0d27814b4b6)
+
 
 Список ключевых изменений:
 
