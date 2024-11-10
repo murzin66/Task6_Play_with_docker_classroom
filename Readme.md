@@ -1084,4 +1084,138 @@ cat Dockerfile
 
 ### Step 2: Link Extractor Module with Full URI and Anchor Text
 
+Переключимся на ветку 2 и просмотрим файлы, находящиеся в ней:
+
+<b>git checkout step2
+
+tree</b>
+
+![Screenshot 2024-11-10 at 19 57 50](https://github.com/user-attachments/assets/c1241125-a735-4bba-957f-e6eef4ff569d)
+
+Просмотрим содержимое файла linkextractor.py
+
+<b>cat linkextractor.py</b>
+
+![Screenshot 2024-11-10 at 19 59 11](https://github.com/user-attachments/assets/9528fdcb-45a0-456b-9ecd-f9c1b4d692d0)
+
+Создадим образ из докерфайла
+
+<b> docker image build --network=host -t linkextractor:step2 .</b>
+
+![Screenshot 2024-11-10 at 20 09 57](https://github.com/user-attachments/assets/44e30bde-028c-4c05-bc36-4cd6890d7533)
+
+При создании образа был использован таг step 2, таким образом образ step 1 не был перезаписан, убедимся в этом, просмотрим список образов:
+
+<b>docker image ls </b>
+
+![Screenshot 2024-11-10 at 20 15 20](https://github.com/user-attachments/assets/70711f63-70b4-42df-a20f-c2a4c943fb0b)
+
+Запустим контейнер step 2, убедимся в том, что вывод стал более информативным по чравнению с контейнером step 1:
+
+<b>docker container run -it --network=host --rm linkextractor:step2 https://training.play-with-docker.com/</b>
+
+![Screenshot 2024-11-10 at 20 22 28](https://github.com/user-attachments/assets/ccb23fb0-4d90-458d-a1fe-fa4aed3e4d18)
+
+Вывод первого контейнера остался прежним:
+
+<b> docker container run -it --network=host --rm linkextractor:step1 https://training.play-with-docker.com/ </b>
+
+![Screenshot 2024-11-10 at 20 23 13](https://github.com/user-attachments/assets/f5f07c19-f113-49c8-885c-af43e42c24ee)
+
+Переключимся на ветку 3, просмотрим файлы, находящиеся в этой ветке, просмотрим Dockerfile:
+
+<b>git checkout step3
+
+tree
+
+cat Dockerfile</b>
+
+![Screenshot 2024-11-10 at 20 24 59](https://github.com/user-attachments/assets/61f46c04-62a7-459a-8d3f-e737b5113979)
+
+В данном случае для фиксации зависимостей используется файл requirements.txt, теперь нет необходимости устанавливать пакеты отдельными командами. Точка входа изменилась на файл main.py, просмотрим его содержимое:
+
+<b>cat main.py</b>
+
+![Screenshot 2024-11-10 at 20 27 38](https://github.com/user-attachments/assets/5175269d-0a45-4ee6-b58b-7f1ba04893f0)
+
+В данном скрипте импортируется функция extract_links из модуля linkextractor и формирует возвращаемый список объектов в JSON. Соберем новый образ с учетом изменений
+
+<b>docker image build --network=host -t linkextractor:step3 .</b> 
+
+![Screenshot 2024-11-10 at 20 30 13](https://github.com/user-attachments/assets/6341fff6-847f-49c3-92a8-7ef3e8860cd0)
+
+Запустим контейнер командой:
+
+<b>docker container run -d -p 5000:5000 --name=linkextractor linkextractor:step3</b>
+
++ -d - ключ позволяет использовать терминал при запущенном контейнере
+
++ --name - позволяет задать имя контейнера
+
++ - p 5000:5000 - позволяет установить соовтетствие между портами контейнера и docker host
+
+![Screenshot 2024-11-10 at 20 48 27](https://github.com/user-attachments/assets/00143100-51a0-41e4-a40d-9120dbfe8865)
+
+Просмотрим список контейнеров:
+
+<b>docker container ls </b>
+
+![Screenshot 2024-11-10 at 20 49 24](https://github.com/user-attachments/assets/bac99d43-bfaa-48bb-b0fe-738e3be824b3)
+
+Сформируем http запрос в формате /api/<url>, чтобы разобрать ссылки на html странице, убедимся в том, что получаем ожидаемый результат:
+
+<b> curl -i http://localhost:5000/api/http://example.com/ </b>
+
+![Screenshot 2024-11-10 at 20 51 59](https://github.com/user-attachments/assets/1a1a826d-0b53-4e70-871b-631f6b5e80c5)
+
+Поскольку контейнер запущен в режиме detached, можно просмотреть, что происходит внутри контейнера:
+
+<b> docker container logs linkextractor</b>
+
+![Screenshot 2024-11-10 at 20 53 49](https://github.com/user-attachments/assets/75405a79-13d2-4e16-b77f-bc9ff0145427)
+
+Остановим и удалим контейнер:
+
+<b>docker container rm -f linkextractor</b>
+
+![Screenshot 2024-11-10 at 20 54 33](https://github.com/user-attachments/assets/b0065e86-9815-47ac-a0e3-c31cf74de536)
+
+Перейдем в выполнение команд на локальной машине. Переключимся на ветку step 4, просмотрим структуру файлов в рабочей директории:
+
+<b>
+git checkout step4
+
+tree</b>
+
+![Screenshot 2024-11-10 at 20 58 58](https://github.com/user-attachments/assets/e2382d61-c622-499a-947b-a71ce35b1a5a)
+
+Просмотрим содержимое файлов:
+
+<b>cat www/Dockerfile</b>
+
+<b>cat docker-compose.yml</b>
+
+![Screenshot 2024-11-10 at 21 26 17](https://github.com/user-attachments/assets/80753566-3513-42f8-9535-4e762e672701)
+
+Список ключевых изменений:
+
++ Сервис JSON API экстрактора ссылок (написанный на Python) переносится в отдельную папку ./api, в которой находится точно такой же код, как и в предыдущем шаге.
+
++ В папке ./www на PHP пишется фронтенд-приложение, которое общается с JSON API
+
++ PHP-приложение монтируется в официальный образ php:7-apache Docker для облегчения модификации в процессе разработки
+
++ Веб-приложение доступно по адресу http://<hostname>[:<prt>]/?url=<url-encoded-url>.
+
++ Переменная окружения API_ENDPOINT используется внутри PHP-приложения, чтобы настроить его на взаимодействие с сервером JSON API
+
++ Написан файл docker-compose.yml для сборки различных компонентов и их склеивания.
+
++ На этом шаге мы планируем запустить два отдельных контейнера, один для API, а другой для веб-интерфейса. 
+
+Переменная $api_endpoint инициализируется значением переменной окружения, предоставленной из файла docker-compose.yml в виде $_ENV[«API_ENDPOINT»]. Запрос выполняется с помощью функции file_get_contents, которая использует переменную $api_endpoint и URL, указанный пользователем в $_GET[«url»]. 
+Запустим контейнер командой:
+
+<b>docker-compose up -d --build</b>
+
 
