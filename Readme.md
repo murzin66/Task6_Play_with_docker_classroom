@@ -14,6 +14,11 @@
 [2 Getting Started Walk-through for Developers](#Getting-Started-Walk-through-for-Developers)
 
 &nbsp;&nbsp;&nbsp;&nbsp;[2.1 Basics](#2-1-basics)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2.1.1 Docker for Beginners - Linux]( #2-1-1-docker-for-beginners-linux)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2.1.2 Application Containerization and Microservice Orchestration]( #2-1-2-application-containerization-and-microservice-orchestration)
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2.1.3 Deploying a Multi-Service App in Docker Swarm Mode]( #2-1-3-deploying-a-multi-service-app-in-docker-swarm-mode)
 
 
