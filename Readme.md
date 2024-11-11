@@ -140,7 +140,7 @@ docker container exec <container ID> ls
  
 ![Screenshot 2024-11-05 at 00 04 47](https://github.com/user-attachments/assets/08a3f0f7-11b9-4c58-9265-33b899eda51d)
 
-<h2>Customizing Docker images</h2>
+<h2 id ="1-1-2-customizing-docker-images">Customizing Docker Images</h2>
 <h3>Image creation from a container</h3>
 В данном подразделе будет создан простой образ из контейнера. Для того, чтобы создать контейнер, загрузим образ ubuntu из Docker hub и запустим командой run:
 docker container run -it --network=host ubuntu bash
@@ -221,7 +221,8 @@ docker container run -it --network=host ubuntu bash
 ![Screenshot 2024-11-06 at 00 37 10](https://github.com/user-attachments/assets/d2cfdc3c-8584-484d-acfc-078ddb17f1e3)
 
 <p>Для образа hello наблюдаем уже три слоя: один из слоев это образ alpine (можно наблюдать как sha256 совпадают с образом alpine), далее есть слой Run для установки необходимых пакетов, а также слой содержащий копирование файла index.js с локальной машины в контейнер. Также стоит отметить, что все слои кроме последнего являются неизменяемыми</p>
-<h3>Swarm Mode Introduction for IT Pros</h3>
+
+<h3 id = "1-1-3-deploy-and-managing-multiple-containers">1.1.3 Deploy and Managing Multiple Containers</h3>
 <h3>Initialize your swarm</h3>
 <p>Swarm режим сообщает докеру о том, что необходимо запустить несколько Docker движков и мы хотим иметь возможность управлять ими всеми. Для того, чтобы инициировать swarm режим воспользуемся командой <b>docker swarm init --advertise-addr $(hostname -i)</b>. В результате выполнения программы получим:</p>
 
@@ -247,7 +248,7 @@ docker container run -it --network=host ubuntu bash
 
 <h3>Deploy a Stack</h3>
 
-<p>После клонирования обртим внимание на файл docker-stack.yml, который содержит информацию о архитектуре сервисов, количестве экземпляров, как все соединено, как обрабатывать обновления для каждого сервиса</p>
+<p>После клонирования обратим внимание на файл docker-stack.yml, который содержит информацию о архитектуре сервисов, количестве экземпляров, как все соединено, как обрабатывать обновления для каждого сервиса</p>
 
 ![Screenshot 2024-11-06 at 01 09 26](https://github.com/user-attachments/assets/e7da1890-a294-44e0-b904-e0648c4a42ae)
 
@@ -270,7 +271,8 @@ docker container run -it --network=host ubuntu bash
 ![Screenshot 2024-11-06 at 01 20 29](https://github.com/user-attachments/assets/c95754b4-6ea7-4a78-9fec-87c186d185ab)
 
 <h2 id = "1-2-digging-deeper">Stage 2: Digging deeper</h2>
-<h3>Security Lab: Seccomp</h3>
+
+<h3 id = "1-2-1-seccomp-profiles">1.2.1 Seccomp profiles</h3>
 <h3>Step 1: Clone the labs GitHub repo</h3>
 <p>В данной работе рассмотрен  seccomp, который предоставляет  песочницу в ядре линукса, который действует как брандмауэр для системых вызовов. 
 Он использует правила Berkeley Packet Filter (BPF), которые могут значительно ограничить доступ контейнеров к ядру Linux хоста Docker. Клонируем репозиторий, содержащий профиль seccomp для выполнения работы, изменим рабочую директорию </p>
@@ -347,7 +349,7 @@ cat ./seccomp-profiles/default-no-chmod.json | grep chmod
 
 ![Screenshot 2024-11-06 at 21 59 45](https://github.com/user-attachments/assets/07370a24-3f20-4820-82a6-f719643d15d4)
 
-<h3>Linux kernel capabilities and Docker</h3>
+<h3 id = "1-2-3-linux-kernel-capabilities-and-docker">1.2.2 Linux Kernel Capabilities and Docker</h3>
 
 <h3>Introduction to capabilities</h3>
 
@@ -411,7 +413,7 @@ cat ./seccomp-profiles/default-no-chmod.json | grep chmod
 
 ![Screenshot 2024-11-06 at 23 09 25](https://github.com/user-attachments/assets/e61bb7f8-7631-4271-9e9c-d2845158c936)
 
-<h3> Docker networking hands-on lab</h3>
+<h3 id ="1-2-3-docker-networking-hands-on-lab"> 1.2.3 Docker Networking Hands-on Lab</h3>
 
 <h3> Section 1: Networking Basics</h3>
 
@@ -620,7 +622,7 @@ cat /etc/resolv.conf
 
 ![Screenshot 2024-11-07 at 01 29 49](https://github.com/user-attachments/assets/e60a6275-edd2-42a6-809d-d3f8a6d9bcb1)
 
-<h3>Orchestration<h3>
+<h3 id ="1-2-4-docker-orchestration-hands-on-lab">1.2.4 Docker Orchestration Hands-on Lab<h3>
 <h3>Section 1: What is Orchestration</h3>
 
 Оркестрация необходима при разработке выскоко-нагруженных приложений с высокими требованиями доступности. Механизм оркестрации позволяет автоматически распределять нагрузку между узлами приложения, в случае если например один из узлов входит из строя. Развертывание приложения вручную является трудоемким, поскольку необходимо прописывать ssh для каждой машины самостоятельно, с помощью инструментов оркестровки  можно освободиться от большей части этой ручной работы и позволить автоматизации выполнить всю тяжелую работу
