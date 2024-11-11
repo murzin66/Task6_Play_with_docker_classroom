@@ -1258,3 +1258,135 @@ tree</b>
 ![Screenshot 2024-11-11 at 00 12 46](https://github.com/user-attachments/assets/bddda8e2-5489-4d8c-a71b-13b5b178bb14)
 
 ###Step 5
+
+Переключимся на ветку step 5:
+
+<b> git checkout step5
+
+tree</b>
+
+Ключевые изменения по сравнению с предыдущим шагом:
+
++ Еще один Dockerfile добавлен в директорию ./www c php веб-приложением
++ Redis котнейнер добавлен для кеширования из официального образа Redis
++ API сервис передает команду Redis избежать загрузки и парсинга страниц, содержимое которых было уже обработано
++ Переменная окружения REDIS_URL добавлена в API сервис для связи с Redis cache
+
+Просмотрим содержимое Докерфайла, добавленного в директорию ./www:
+
+<b>cat www/Dockerfile</b>
+
+![Screenshot 2024-11-11 at 20 34 32](https://github.com/user-attachments/assets/92b3b0a6-2fe5-4f3d-8a7b-a6915eefc2f2)
+
+Данный докерфайл основывается на образе apache и копирует файлы из директории ./www в директорию /var/www/html/ образа. Кроме того добавлена переменная окружения API_ENDPOINT, которая определяет точку входа приложения. Просмотрим содержимое файла cat api/main.py:
+
+<b> cat api/main.py </b>
+
+![Screenshot 2024-11-11 at 20 38 19](https://github.com/user-attachments/assets/1cee7cbb-e655-41bd-afb8-f104b2c266bf)
+
+В данном файле создается экземпляр клиента Redis с именем хоста redis и портом Redis по умолчанию 6379. Сначала мы пытаемся проверить, есть ли кэш в хранилище Redis для заданного URL, если нет, то используем функцию extract_links, как и раньше, и заполняем кэш для будущих попыток. Просмотрим содержимое файла docker-compose.yml:
+
+<b> cat docker-compose.yml </b>
+
+![Screenshot 2024-11-11 at 20 40 28](https://github.com/user-attachments/assets/886d8a15-7d73-4e42-8dcb-e62bc813227d)
+
+Конфигурация api-сервиса во многом осталась прежней, за исключением обновленного тега образа и добавленной переменной окружения REDIS_URL, указывающей на сервис Redis. Для веб-сервиса мы используем пользовательский образ linkextractor-web:step5-php, который будет собран с помощью недавно добавленного Dockerfile в папке ./www. Мы больше не монтируем папку ./www с помощью конфигурации томов. Наконец, добавлена новая служба redis, которая будет использовать официальный образ с DockerHub и пока не нуждается в особых настройках. Этот сервис доступен для Python API с помощью имени сервиса, точно так же, как API-сервис доступен для внешнего сервиса PHP.
+
+Соберем сервисы командой : <b>docker-compose up -d --build</b>
+
+![Screenshot 2024-11-11 at 20 42 52](https://github.com/user-attachments/assets/6598e44f-1dac-4683-80a5-86b8e9de0811)
+
+После запуска сервисов можем заметить, как веб-ресурс для извлечения ссылок на странице стал снова доступен:
+
+![Screenshot 2024-11-11 at 20 28 31](https://github.com/user-attachments/assets/fab3eb32-e3ed-45ab-854e-3fd33a3d7394)
+
+Для проверки был ли запущен сервис redis воспользуемся командой :
+
+<b> docker-compose exec redis redis-cli monitor </b>
+
+![Screenshot 2024-11-11 at 20 45 19](https://github.com/user-attachments/assets/d8eeccb5-3544-47ba-b611-d81d4b4136b1)
+
+Теперь поскольку не используется монтирование, то локальные изменения не должны менять работу приложения :
+
+<b>sed -i 's/Link Extractor/Super Link Extractor/g' www/index.php</b>
+
+![Screenshot 2024-11-11 at 20 47 14](https://github.com/user-attachments/assets/845fdcfd-ce19-431b-9d40-da50016ce9c9)
+
+Отменим изменения и остановим контейнер:
+
+<b>
+ git reset --hard
+
+ docker-compose down
+</b>
+
+![Screenshot 2024-11-11 at 20 48 20](https://github.com/user-attachments/assets/517882ea-b70d-4d08-ad17-a839b53e57ca)
+
+### Step 6 Замена python сервиса на Ruby
+
+Для удобства воспользуемся Docker Desktop версией. Переключмся на ветку step 6, просмотрим ветку проекта:
+
+<b>
+git checkout step6
+</b>
+
+![Screenshot 2024-11-11 at 21 32 10](https://github.com/user-attachments/assets/acdb23b6-cd19-4979-bba0-0f1db540625d)
+
+Изменения по сравнению с предыдущей реализацией:
+
++ Python сервис заменен на аналогичную реализацию на Ruby
++ Переменная API_ENDPOINT обновлена для доступа к точке входа приложения Ruby
++ Событие кэширования извлечения ссылок логируется
+
+Просмотрим содержимое файла linkextractor.rb:
+
+<b>cat api/linkextractor.rb</b>
+
+![Screenshot 2024-11-11 at 21 34 44](https://github.com/user-attachments/assets/1910a0a1-e4c0-4e67-935a-270315f0cd9b)
+
+Содержимое файла аналогично с файлом на языке python, использованным ранее
+Просмотрим содержимое api Dockerfile:
+
+<b>cat api/Dockerfile</b>
+
+![Screenshot 2024-11-11 at 21 35 59](https://github.com/user-attachments/assets/f4c29568-56ef-41c9-be06
+
+Просмотрим содержимое файла docker-compose.yml:
+
+<b>cat docker-compose.yml</b>
+
+![Screenshot 2024-11-11 at 21 42 55](https://github.com/user-attachments/assets/5b8deb58-8041-4990-8bd0-4a1ac9eeea59)
+-1ae45929d169)
+
+Ключевое изменение по сравнению с предыдущим запуском - изменилось соответствие портов, а также в соотсветствии с этим изменилась переменная среды. Соберем образ из докерфайла:
+
+<b>docker-compose up -d --build</b>
+
+![Screenshot 2024-11-11 at 21 45 06](https://github.com/user-attachments/assets/65552d2b-fdf2-4435-98e6-cf4fb7a87ed3)
+
+![Screenshot 2024-11-11 at 21 45 17](https://github.com/user-attachments/assets/96025366-8d4c-4a8f-bfa1-550bbec860aa)
+
+Проверим доступ к сервису через API:
+
+<b>curl -i http://localhost:4567/api/http://example.com/</b>
+
+![Screenshot 2024-11-11 at 21 46 41](https://github.com/user-attachments/assets/efd91e82-560b-413d-87ae-2b8c92f285e1)
+
+Проверим доступность сервиса по извлечению ссылок с сайтов на порту 80 localhost, а также его работоспособность:
+
+![Screenshot 2024-11-11 at 21 50 35](https://github.com/user-attachments/assets/1fcef32c-2345-42f4-8061-43dda99f8cc4)
+
+Выполним команду для того, чтобы интерактивно наблюдать за логами при выполнении запросов:
+
+<b>tail -f logs/extraction.log</b>
+
+![Screenshot 2024-11-11 at 21 53 31](https://github.com/user-attachments/assets/3d411bb9-bb05-4602-adca-fb6b8adc59c9)
+
+Однако отправляя запросы на парсинг ссылок на странице, в консоли не появляются ожидаемые новые логи, изучим логи, записанные в файл далее. Остановим и удалим работающие контейнеры командой <b>docker-compose down</b>
+
+![Screenshot 2024-11-11 at 21 55 23](https://github.com/user-attachments/assets/ec297efa-803e-4c38-952d-ccc5a967be87)
+
+После того, как контейнеры остановлены можно просмотреть содержимое логов - запросы на парсинг ссылок на сервисе, работающем на порту 80, которые соответствуют реальным запросам, отправляемым во время работы контейнера
+![Screenshot 2024-11-11 at 21 55 52](https://github.com/user-attachments/assets/81fcf2ab-c818-4407-b42d-a466d2230729)
+
+
