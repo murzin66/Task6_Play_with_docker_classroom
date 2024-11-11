@@ -744,7 +744,7 @@ Swarm менеджер запланировал 7 контейнеров в кл
 ![Screenshot 2024-11-11 at 23 21 11](https://github.com/user-attachments/assets/da6a82c3-ffba-4a57-ba56-2e41109aaacf)
 
 
-# Getting Started Walk-through for Developers
+# 2 Getting Started Walk-through for Developers
 
 <h2 id = "2-1-basics">Basics</h2>
 
