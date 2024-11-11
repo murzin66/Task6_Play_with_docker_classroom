@@ -1395,4 +1395,60 @@ git checkout step6
 После того, как контейнеры остановлены можно просмотреть содержимое логов - запросы на парсинг ссылок на сервисе, работающем на порту 80, которые соответствуют реальным запросам, отправляемым во время работы контейнера
 ![Screenshot 2024-11-11 at 21 55 52](https://github.com/user-attachments/assets/81fcf2ab-c818-4407-b42d-a466d2230729)
 
+## Deploying a Multi-Service App in Docker Swarm Mode
 
+### Init your swarm
+
+В данном задании будем работать с двумя терминалами : один терминал будет работать в качестве менеджера swarm, другой терминал будет исполнять роль worker. Инициализируем swarm, в первом терминале выполним команду:
+
+<b>docker swarm init --advertise-addr $(hostname -i)</b>
+
+![Screenshot 2024-11-11 at 22 30 33](https://github.com/user-attachments/assets/f1aae7ae-f451-448b-8aed-c38e16e5a499)
+
+Присоединим worker узел с помощью команды <b>docker swarm join --token SWMTKN-1-62uhytiplr4wurl9o3j2v1ac1q96gmhvp4q97ef3onjzdht5ik-2nq1tva1o2kvu4o0cabp98342 192.168.0.8:2377</b>
+
+![Screenshot 2024-11-11 at 22 30 54](https://github.com/user-attachments/assets/8b2cd480-bd47-48ce-aa0e-28fdbcf53f9e)
+
+### Show members of swarm
+
+Убедимся в том, что второй узел успешно присоединился, просмотрим список узлов:
+
+<b>docker node ls</b>
+
+![Screenshot 2024-11-11 at 22 32 42](https://github.com/user-attachments/assets/53a88b39-c094-4140-8bed-d4c05e085110)
+
+### Clone the voting-app
+
+Клонируем приложение для голосования в рабочую директорию:
+
+<b>git clone https://github.com/docker/example-voting-app
+
+cd example-voting-app</b>
+
+### Deploy a stack
+
+docker-stack.yml в текущей папке будет использоваться для развертывания приложения для голосования в виде стека. Стек представляет собой набор сервисов, которые разворачиваются вместе. Выполним развертывание:
+
+<b>docker stack deploy --compose-file=docker-stack.yml voting_stack</b>
+
+![Screenshot 2024-11-11 at 22 35 11](https://github.com/user-attachments/assets/d0b1a451-4ba7-4b94-9140-5def80bf1796)
+
+Просмотрим развернутый стек:
+
+<b>docker stack ls</b>
+
+![Screenshot 2024-11-11 at 22 36 59](https://github.com/user-attachments/assets/ad23426c-238c-43c0-b979-132f9704ae0a)
+
+Просмотрим список сервисов внутри стека:
+
+<b>docker stack services voting_stack</b>
+
+![Screenshot 2024-11-11 at 22 38 22](https://github.com/user-attachments/assets/f50b43bb-2471-442b-8059-0fdb93ecf952)
+
+Просмотрим задачи сервиса голосования:
+
+<b>docker service ps voting_stack_vote</b>
+
+![Screenshot 2024-11-11 at 22 39 18](https://github.com/user-attachments/assets/d0051f4b-fa48-415c-9a11-efebc9b426d3)
+
+Как результат наблюдаем ожидаемые две задачи сервиса
