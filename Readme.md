@@ -14,6 +14,8 @@
 [2 Getting Started Walk-through for Developers](#Getting-Started-Walk-through-for-Developers)
 
 &nbsp;&nbsp;&nbsp;&nbsp;[2.1 Basics](#2-1-basics)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2.1.3 Deploying a Multi-Service App in Docker Swarm Mode]( #2-1-3-deploying-a-multi-service-app-in-docker-swarm-mode)
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;[2.2 Digging Deeper](#2-2-digging-deeper)
 
@@ -715,7 +717,7 @@ Swarm менеджер запланировал 7 контейнеров в кл
 
 <h2 id = "2-1-basics">Basics</h2>
 
-<h3>Docker for Beginners - Linux</h3>
+<h3 id = "2-1-1-docker-for-beginners">Docker for Beginners - Linux</h3>
 
 Клонируем репозиторий для лаборной работы
 
@@ -981,7 +983,8 @@ Swarm менеджер запланировал 7 контейнеров в кл
 
 ![Screenshot 2024-11-07 at 20 27 28](https://github.com/user-attachments/assets/c17909d3-b33f-4f66-b96c-8cd82833af0f)
 
-<h3>Application Containerization and Microservice Orchestration</h3>
+<h3 id = "2-1-2-application-containerization-and-microservice-orchestration">Application Containerization and Microservice Orchestration</h3>
+
 
 Клонируем репозиторий для лабораторной работы
 
@@ -1395,7 +1398,8 @@ git checkout step6
 После того, как контейнеры остановлены можно просмотреть содержимое логов - запросы на парсинг ссылок на сервисе, работающем на порту 80, которые соответствуют реальным запросам, отправляемым во время работы контейнера
 ![Screenshot 2024-11-11 at 21 55 52](https://github.com/user-attachments/assets/81fcf2ab-c818-4407-b42d-a466d2230729)
 
-## Deploying a Multi-Service App in Docker Swarm Mode
+<h3 id ="2-1-3-deploying-a-multi-service-app-in-docker-swarm-mode"> 2.1.3 Deploying a Multi-Service App in Docker Swarm Mode</h3>
+
 
 ### Init your swarm
 
