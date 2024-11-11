@@ -746,9 +746,9 @@ Swarm менеджер запланировал 7 контейнеров в кл
 
 # 2 Getting Started Walk-through for Developers
 
-<h2 id = "2-1-basics">Basics</h2>
+<h2 id = "2-1-basics">2.1 Basics</h2>
 
-<h3 id = "2-1-1-docker-for-beginners">Docker for Beginners - Linux</h3>
+<h3 id = "2-1-1-docker-for-beginners">2.1.1 Docker for Beginners - Linux</h3>
 
 Клонируем репозиторий для лаборной работы
 
