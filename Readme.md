@@ -23,7 +23,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1.2.4 Docker Orchestration Hands-on Lab]( #1-2-4-docker-orchestration-hands-on-lab)
 
-&nbsp;&nbsp;&nbsp;&nbsp;[1.3 Moving to production ( no active resources on portal https://training.play-with-docker.com/)](#1-3-moving-to-production)
+&nbsp;&nbsp;&nbsp;&nbsp;[1.3 Moving to production](#1-3-moving-to-production)
 
 [2 Getting Started Walk-through for Developers](#Getting-Started-Walk-through-for-Developers)
 
@@ -140,7 +140,7 @@ docker container exec <container ID> ls
  
 ![Screenshot 2024-11-05 at 00 04 47](https://github.com/user-attachments/assets/08a3f0f7-11b9-4c58-9265-33b899eda51d)
 
-<h2 id ="1-1-2-customizing-docker-images">Customizing Docker Images</h2>
+<h2 id ="1-1-2-customizing-docker-images">1.1.2 Customizing Docker Images</h2>
 <h3>Image creation from a container</h3>
 В данном подразделе будет создан простой образ из контейнера. Для того, чтобы создать контейнер, загрузим образ ubuntu из Docker hub и запустим командой run:
 docker container run -it --network=host ubuntu bash
@@ -734,6 +734,15 @@ Swarm менеджер запланировал 7 контейнеров в кл
 ![Screenshot 2024-11-07 at 10 25 46](https://github.com/user-attachments/assets/be4c4550-8949-4e33-adfe-c27820630802)
 
 ![Screenshot 2024-11-07 at 10 25 54](https://github.com/user-attachments/assets/a4a47185-f00f-4233-92db-c09510136108)
+
+<h2 id = "1-3-moving-to-production">1.3 Moving to production </h2>
+
+На портале  https://training.play-with-docker.com/ не предоставлено ни одной активной ссылки на задание в этом разделе, каждая ссылка не содержит ресурса
+
+![Screenshot 2024-11-11 at 23 20 48](https://github.com/user-attachments/assets/311b94a9-8c29-40ee-b05f-2ec8fc9e3421)
+
+![Screenshot 2024-11-11 at 23 21 11](https://github.com/user-attachments/assets/da6a82c3-ffba-4a57-ba56-2e41109aaacf)
+
 
 # Getting Started Walk-through for Developers
 
