@@ -25,7 +25,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;[1.3 Moving to production](#1-3-moving-to-production)
 
-[2 Getting Started Walk-through for Developers](#Getting-Started-Walk-through-for-Developers)
+[2 Getting Started Walk-through for Developers](#2-Getting-Started-Walk-through-for-Developers)
 
 &nbsp;&nbsp;&nbsp;&nbsp;[2.1 Basics](#2-1-basics)
 
