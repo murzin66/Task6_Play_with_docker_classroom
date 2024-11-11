@@ -1042,6 +1042,8 @@ git checkout step0
   
 + Установлены ли библиотеки beautifulsoup4 и requests?
 
+### Step 1: Containerized Link Extractor Script
+
 Для решения даных вопросов подойдет коцепция контейнеризации. Попробуем контейнеризовать данный скрипт и запустить его. Переключимся на ветку step1, просмотрим какие файлы находятся в директории, просмотрим содержимое докерфайла:
 
 <b>
@@ -1122,6 +1124,8 @@ tree</b>
 
 ![Screenshot 2024-11-10 at 20 23 13](https://github.com/user-attachments/assets/f5f07c19-f113-49c8-885c-af43e42c24ee)
 
+### Step 3: Link Extractor API Service
+
 Переключимся на ветку 3, просмотрим файлы, находящиеся в этой ветке, просмотрим Dockerfile:
 
 <b>git checkout step3
@@ -1180,7 +1184,9 @@ cat Dockerfile</b>
 
 ![Screenshot 2024-11-10 at 20 54 33](https://github.com/user-attachments/assets/b0065e86-9815-47ac-a0e3-c31cf74de536)
 
-Перейдем в выполнение команд на локальной машине. Переключимся на ветку step 4, просмотрим структуру файлов в рабочей директории:
+### Step 4: Link Extractor API and Web Front End Services
+
+Переключимся на ветку step 4, просмотрим структуру файлов в рабочей директории:
 
 <b>
 git checkout step4
@@ -1257,7 +1263,7 @@ tree</b>
 
 ![Screenshot 2024-11-11 at 00 12 46](https://github.com/user-attachments/assets/bddda8e2-5489-4d8c-a71b-13b5b178bb14)
 
-###Step 5
+### Step 5: Redis Service for Caching
 
 Переключимся на ветку step 5:
 
