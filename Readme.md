@@ -15,7 +15,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;[2.1 Basics](#2-1-basics)
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2.1.1 Docker for Beginners - Linux]( #2-1-1-docker-for-beginners-linux)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2.1.1 Docker for Beginners - Linux]( #2-1-1-docker-for-beginners)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[2.1.2 Application Containerization and Microservice Orchestration]( #2-1-2-application-containerization-and-microservice-orchestration)
 
