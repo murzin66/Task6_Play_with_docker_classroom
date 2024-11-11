@@ -1014,7 +1014,7 @@ Swarm менеджер запланировал 7 контейнеров в кл
 
 ![Screenshot 2024-11-07 at 20 27 28](https://github.com/user-attachments/assets/c17909d3-b33f-4f66-b96c-8cd82833af0f)
 
-<h3 id = "2-1-2-application-containerization-and-microservice-orchestration">Application Containerization and Microservice Orchestration</h3>
+<h3 id = "2-1-2-application-containerization-and-microservice-orchestration">2.1.2 Application Containerization and Microservice Orchestration</h3>
 
 
 Клонируем репозиторий для лабораторной работы
